@@ -1,0 +1,1270 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KI-Strategie Self-Assessment – AI Performance Academy</title>
+<meta property="og:title" content="KI-Strategie Self-Assessment – AI Performance Academy">
+<meta property="og:description" content="Bewerte 20 KI-Strategie-Bausteine in 5 Kategorien. Erkenne Staerken, Luecken und erfahre, wie KI-Agenten deine KI-Transformation beschleunigen.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://holgergelhausen.github.io/ai-performance-academy-assets/og-assessment.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="KI-Strategie Self-Assessment – AI Performance Academy">
+<meta name="twitter:description" content="Bewerte 20 KI-Strategie-Bausteine in 5 Kategorien. Erkenne Staerken, Luecken und erfahre, wie KI-Agenten deine KI-Transformation beschleunigen.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='6' fill='#FF1A1A'/><text x='16' y='24' text-anchor='middle' fill='white' font-family='system-ui' font-weight='900' font-size='22'>K</text></svg>">
+<!-- Version: 1.1.0 - Light Theme - KI-Strategie Self-Assessment – AI Performance Academy -->
+<!-- Changelog:
+  v1.1.0 (2026-02-10)
+    - Fix: --primary-light auf #E01515 (wie marketing-assessment-light)
+    - Fix: Moz-Range-Thumb background auf #FFFFFF statt var(--white)
+    - Fix: Need-Card box-shadow hinzugefuegt (0.04 opacity)
+  v1.0.0 (2026-02-10)
+    - Initial Release: 20 Bausteine, 5 Tiers, 7 Beduerfnisse
+    - 100 Thesen, 100 Empfehlungen, 20 KI-Agenten-Hinweise
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<style>
+/* Assessment Engine Styles v5.0.0 */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --black: #000000; --bg: #FFFFFF; --bg-card: #FFFFFF; --bg-card-hover: #F7F8FA;
+  --primary: #FF1A1A; --primary-light: #E01515; --primary-dark: #CC1515;
+  --gray: #767D8C; --gray-light: #767D8C; --gray-dark: #D9DDE3;
+  --white: #000000; --white-muted: #1F1F1F;
+  --tier-strategic: #3B82F6; --tier-content: #22C55E; --tier-channel: #F97316;
+  --tier-conversion: #EF4444; --tier-optimization: #A855F7;
+  --score-low: #EF4444; --score-mid: #F59E0B; --score-high: #22C55E;
+}
+body { font-family: 'Montserrat', -apple-system, sans-serif; background: var(--bg); color: var(--white-muted); min-height: 100vh; line-height: 1.6; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+.screen { display: none; min-height: 100vh; padding: 80px 0 40px; animation: fadeIn 0.4s ease; }
+.screen.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Logo */
+.logo-bar { display: none; }
+.logo-bar img { height: 36px; filter: brightness(0) invert(1) hue-rotate(181.9deg) saturate(3); }
+.logo-bar span { font-size: 13px; font-weight: 600; color: var(--gray-light); letter-spacing: 0.5px; text-transform: uppercase; }
+
+/* Landing */
+.landing-hero { text-align: center; padding: 60px 0 40px; }
+.landing-hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; color: var(--white); margin-bottom: 16px; line-height: 1.15; }
+.landing-hero h1 .accent { color: var(--primary); }
+.landing-hero .subtitle { font-size: clamp(1rem, 2.5vw, 1.25rem); color: var(--gray-light); max-width: 600px; margin: 0 auto 40px; font-weight: 400; }
+.landing-stats { display: flex; justify-content: center; gap: 40px; margin-bottom: 48px; flex-wrap: wrap; }
+.landing-stat .number { font-size: 2.5rem; font-weight: 900; color: var(--primary); }
+.landing-stat .label { font-size: 0.85rem; color: var(--gray-light); text-transform: uppercase; letter-spacing: 1px; }
+.landing-stat { text-align: center; }
+.pyramid { max-width: 500px; margin: 0 auto 48px; }
+.pyramid-tier { display: flex; align-items: center; justify-content: center; padding: 14px 20px; margin: 4px auto; border-radius: 8px; font-weight: 700; font-size: 0.9rem; color: white; transition: transform 0.2s; cursor: default; }
+.pyramid-tier:hover { transform: scale(1.02); }
+.pyramid-tier.t-optimization { width: 50%; background: var(--tier-optimization); cursor: pointer; }
+.pyramid-tier.t-conversion { width: 62%; background: var(--tier-conversion); cursor: pointer; }
+.pyramid-tier.t-channel { width: 74%; background: var(--tier-channel); cursor: pointer; }
+.pyramid-tier.t-content { width: 86%; background: var(--tier-content); cursor: pointer; }
+.pyramid-tier.t-strategic { width: 98%; background: var(--tier-strategic); cursor: pointer; }
+.pyramid-count { font-size: 0.75rem; opacity: 0.8; margin-left: 8px; font-weight: 400; }
+
+/* Need Cards */
+.needs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; max-width: 960px; margin: 0 auto 40px; }
+.need-card { background: var(--bg-card); border: 2px solid var(--gray-dark); border-radius: 16px; padding: 24px 20px; cursor: pointer; transition: all 0.25s; text-align: center; box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+.need-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.1); border-color: var(--need-color, var(--gray)); }
+.need-card .need-icon { font-size: 2rem; margin-bottom: 12px; display: block; }
+.need-card .need-name { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+.need-card .need-divider { width: 40px; height: 2px; margin: 8px auto; border-radius: 1px; }
+.need-card .need-question { font-size: 0.85rem; color: var(--gray-light); line-height: 1.4; }
+.komplett-check-link { color: var(--gray-light); font-size: 0.9rem; cursor: pointer; margin-top: 24px; display: inline-block; border-bottom: 1px dashed var(--gray); transition: color 0.2s; }
+.komplett-check-link:hover { color: var(--white); }
+
+/* Need Assessment Context */
+.need-header-banner { padding: 16px 24px; border-radius: 12px; margin-bottom: 24px; display: flex; align-items: center; gap: 16px; }
+.need-header-banner .need-header-icon { font-size: 1.8rem; }
+.need-header-banner h3 { font-size: 1.1rem; font-weight: 700; color: var(--white); }
+.need-header-banner p { font-size: 0.85rem; margin-top: 4px; }
+.need-context-badge { font-size: 0.75rem; padding: 6px 12px; border-radius: 6px; margin-bottom: 8px; line-height: 1.4; }
+.need-context-badge.primary { border-left: 3px solid; }
+.need-context-badge.secondary { border-left: 3px dashed var(--gray); background: color-mix(in srgb, var(--gray) 5%, transparent); color: var(--gray-light); }
+.slider-item.need-dimmed { opacity: 0.55; }
+.slider-item.need-dimmed:hover { opacity: 0.8; }
+
+/* Need Results */
+.need-score-section { text-align: center; margin-bottom: 32px; }
+.need-score-circle { width: 140px; height: 140px; border-radius: 50%; border: 5px solid var(--gray-dark); display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 0 auto 16px; position: relative; }
+.need-score-num { font-size: 2.5rem; font-weight: 900; }
+.need-score-label { font-size: 0.85rem; color: var(--gray-light); }
+.impact-card { background: var(--bg-card); border: 1px solid var(--gray-dark); border-radius: 12px; padding: 16px 20px; margin-bottom: 10px; }
+.impact-card.weakness { border-left: 4px solid var(--score-low); }
+.impact-card.strength { border-left: 4px solid var(--score-high); }
+.impact-card.blockade { border-left: 4px solid var(--score-mid); }
+.impact-card h4 { font-size: 0.9rem; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+.impact-card p { font-size: 0.82rem; color: var(--gray-light); line-height: 1.5; }
+.impact-section { margin-bottom: 28px; }
+.impact-section h3 { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--gray-dark); }
+
+/* 90-Day Plan */
+.plan-month { background: var(--bg-card); border: 1px solid var(--gray-dark); border-radius: 12px; padding: 24px; margin-bottom: 16px; }
+.plan-month-header { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.plan-month-num { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 900; font-size: 1.1rem; color: white; }
+.plan-month-title { font-size: 1rem; font-weight: 700; color: var(--white); }
+.plan-month-desc { font-size: 0.85rem; color: var(--gray-light); }
+.plan-action { display: flex; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--gray-dark); }
+.plan-action:last-child { border-bottom: none; }
+.plan-action-score { min-width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem; color: white; }
+.plan-action-info { flex: 1; }
+.plan-action-name { font-size: 0.9rem; font-weight: 600; color: var(--white); }
+.plan-action-tip { font-size: 0.78rem; color: var(--gray-light); margin-top: 2px; }
+.plan-action-agent { font-size: 0.72rem; color: var(--tier-optimization); margin-top: 4px; }
+
+/* Landing variant for complete check */
+.landing-pyramid-section { display: none; }
+.landing-pyramid-section.visible { display: block; }
+.landing-needs-section { display: block; }
+.landing-needs-section.hidden { display: none; }
+
+/* Buttons */
+.btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--primary); color: white; border: none; padding: 16px 48px; font-size: 1.1rem; font-weight: 700; border-radius: 12px; cursor: pointer; font-family: inherit; transition: all 0.2s; text-transform: uppercase; letter-spacing: 1px; }
+.btn-primary:hover { background: var(--primary-light); transform: translateY(-2px); box-shadow: 0 8px 30px rgba(255,26,26,0.3); }
+.btn-secondary { display: inline-flex; align-items: center; gap: 8px; background: var(--gray-dark); color: var(--white); border: 1px solid var(--gray); padding: 12px 28px; font-size: 0.95rem; font-weight: 600; border-radius: 10px; cursor: pointer; font-family: inherit; transition: all 0.2s; }
+.btn-secondary:hover { background: var(--gray); border-color: var(--white); }
+
+/* Assessment */
+.assessment-header { text-align: center; margin-bottom: 32px; }
+.assessment-header h2 { font-size: 1.8rem; font-weight: 800; color: var(--white); margin-bottom: 8px; }
+.assessment-layout { display: grid; grid-template-columns: 1fr 320px; gap: 32px; align-items: start; }
+.tier-tabs { display: flex; gap: 6px; margin-bottom: 24px; flex-wrap: wrap; }
+.tier-tab { padding: 10px 20px; border: 2px solid var(--gray-dark); background: transparent; color: var(--gray-light); font-family: inherit; font-weight: 600; font-size: 0.85rem; border-radius: 8px; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+.tier-tab:hover { border-color: var(--gray); }
+.tier-tab.active { color: white; border-color: var(--active-tier-color, var(--primary)); background: color-mix(in srgb, var(--active-tier-color, var(--primary)) 15%, transparent); }
+.slider-group { display: none; }
+.slider-group.active { display: block; }
+.slider-item { background: var(--bg-card); border-radius: 12px; padding: 20px 24px; margin-bottom: 12px; border: 1px solid var(--gray-dark); transition: border-color 0.2s; }
+.slider-item:hover { border-color: var(--gray); }
+.slider-label { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; }
+.slider-name { font-weight: 700; font-size: 0.95rem; color: var(--white); }
+.slider-score { font-weight: 800; font-size: 1.1rem; min-width: 28px; text-align: right; }
+.slider-desc { font-size: 0.8rem; color: var(--gray-light); margin-bottom: 12px; }
+.slider-track { position: relative; width: 100%; height: 8px; background: var(--gray-dark); border-radius: 4px; margin-bottom: 8px; }
+.slider-track input[type="range"] { -webkit-appearance: none; appearance: none; width: 100%; height: 8px; border-radius: 4px; outline: none; cursor: pointer; background: transparent; position: relative; z-index: 2; }
+.slider-track input[type="range"]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: #FFFFFF; border: 3px solid var(--slider-color, var(--primary)); cursor: pointer; box-shadow: 0 2px 8px rgba(0,0,0,0.2); transition: transform 0.15s; }
+.slider-track input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+.slider-track input[type="range"]::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: #FFFFFF; border: 3px solid var(--slider-color, var(--primary)); cursor: pointer; }
+.slider-fill { position: absolute; top: 0; left: 0; height: 100%; border-radius: 4px; z-index: 1; transition: width 0.15s; }
+.slider-levels { display: flex; justify-content: space-between; font-size: 0.65rem; color: var(--gray); }
+
+/* Thesen Checkboxes */
+.thesen-list { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--gray-dark); }
+.thesen-header { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--gray); margin-bottom: 8px; font-weight: 600; }
+.these-item { display: flex; align-items: flex-start; gap: 10px; padding: 7px 0; cursor: pointer; transition: opacity 0.15s; }
+.these-item:hover { opacity: 0.85; }
+.these-cb { width: 18px; height: 18px; border-radius: 4px; border: 2px solid var(--gray); flex-shrink: 0; margin-top: 1px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+.these-cb.checked { border-color: var(--score-high); background: var(--score-high); }
+.these-cb.checked::after { content: ''; display: block; width: 5px; height: 9px; border: solid white; border-width: 0 2px 2px 0; transform: rotate(45deg); margin-top: -2px; }
+.these-text { flex: 1; font-size: 0.8rem; color: var(--gray-light); line-height: 1.4; user-select: none; }
+.these-item.checked .these-text { color: var(--white-muted); }
+.these-item:focus { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 4px; }
+.these-item:focus:not(:focus-visible) { outline: none; }
+.these-level-tag { font-size: 0.6rem; padding: 1px 6px; border-radius: 3px; font-weight: 600; color: white; flex-shrink: 0; margin-top: 2px; }
+
+/* Empfehlung */
+.empfehlung-box { margin-top: 12px; padding: 12px 16px; border-radius: 8px; font-size: 0.8rem; line-height: 1.5; border-left: 3px solid var(--primary); }
+.empfehlung-box.action { background: color-mix(in srgb, var(--score-mid) 8%, transparent); border-left-color: var(--score-mid); }
+.empfehlung-box.good { background: color-mix(in srgb, var(--score-high) 8%, transparent); border-left-color: var(--score-high); }
+.empfehlung-label { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; margin-bottom: 4px; }
+.empfehlung-label.action { color: var(--score-mid); }
+.empfehlung-label.good { color: var(--score-high); }
+.ki-agent-hint { margin-top: 8px; padding: 10px 14px; background: color-mix(in srgb, var(--tier-optimization) 8%, transparent); border-radius: 8px; font-size: 0.78rem; color: var(--gray-light); border-left: 3px solid var(--tier-optimization); }
+.ki-agent-hint strong { color: var(--tier-optimization); }
+
+/* Radar Sidebar */
+.radar-sidebar { position: sticky; top: 80px; }
+.radar-card { background: var(--bg-card); border: 1px solid var(--gray-dark); border-radius: 12px; padding: 20px; }
+.radar-card h3 { font-size: 0.9rem; color: var(--gray-light); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; text-align: center; }
+.radar-canvas-wrap { width: 280px; height: 280px; margin: 0 auto; }
+.tier-averages { margin-top: 16px; }
+.tier-avg-row { display: flex; align-items: center; gap: 10px; padding: 6px 0; }
+.tier-avg-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+.tier-avg-label { font-size: 0.8rem; color: var(--gray-light); flex: 1; }
+.tier-avg-val { font-weight: 700; font-size: 0.9rem; }
+.assessment-nav { display: flex; justify-content: space-between; margin-top: 24px; gap: 12px; }
+.progress-bar { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+.progress-track { flex: 1; height: 4px; background: var(--gray-dark); border-radius: 2px; overflow: hidden; }
+.progress-fill { height: 100%; background: var(--primary); border-radius: 2px; transition: width 0.3s; }
+.progress-label { font-size: 0.75rem; color: var(--gray); font-weight: 600; min-width: 80px; text-align: right; }
+
+/* Results */
+.results-header { text-align: center; margin-bottom: 40px; }
+.results-header h2 { font-size: 1.8rem; font-weight: 800; color: var(--white); margin-bottom: 8px; }
+.overall-score { display: flex; flex-direction: column; align-items: center; margin-bottom: 40px; }
+.score-circle { width: 160px; height: 160px; border-radius: 50%; border: 6px solid var(--gray-dark); display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; margin-bottom: 16px; }
+.score-circle-ring { position: absolute; top: -6px; left: -6px; width: 160px; height: 160px; }
+.score-circle-ring circle { fill: none; stroke-width: 6; stroke-linecap: round; transform: rotate(-90deg); transform-origin: center; transition: stroke-dashoffset 0.8s; }
+.score-number { font-size: 3rem; font-weight: 900; color: var(--white); }
+.score-percent { font-size: 1rem; color: var(--gray-light); }
+.score-label { font-size: 1rem; color: var(--gray-light); }
+.tier-bars { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-bottom: 48px; }
+.tier-bar-item { text-align: center; }
+.tier-bar-label { font-size: 0.75rem; font-weight: 600; color: var(--gray-light); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; }
+.tier-bar-track { height: 120px; width: 40px; margin: 0 auto; background: var(--gray-dark); border-radius: 20px; position: relative; overflow: hidden; }
+.tier-bar-fill { position: absolute; bottom: 0; left: 0; right: 0; border-radius: 20px; transition: height 0.6s; }
+.tier-bar-val { font-size: 1.1rem; font-weight: 800; margin-top: 8px; }
+.results-tabs { display: flex; gap: 4px; margin-bottom: 24px; border-bottom: 1px solid var(--gray-dark); overflow-x: auto; }
+.results-tab { padding: 12px 20px; background: transparent; border: none; color: var(--gray-light); font-family: inherit; font-weight: 600; font-size: 0.85rem; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; }
+.results-tab:hover { color: var(--white); }
+.results-tab.active { color: var(--primary); border-bottom-color: var(--primary); }
+.results-panel { display: none; animation: fadeIn 0.3s; }
+.results-panel.active { display: block; }
+.radar-results-wrap { max-width: 500px; margin: 0 auto; }
+
+/* Heat Map */
+.heatmap-table { width: 100%; border-collapse: separate; border-spacing: 0 4px; }
+.heatmap-table th { text-align: left; padding: 8px 16px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--gray); font-weight: 600; }
+.heatmap-table td { padding: 12px 16px; background: var(--bg-card); font-size: 0.85rem; }
+.heatmap-table tr td:first-child { border-radius: 8px 0 0 8px; }
+.heatmap-table tr td:last-child { border-radius: 0 8px 8px 0; }
+.heatmap-score { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 8px; font-weight: 800; font-size: 0.9rem; color: white; }
+.heatmap-score.low { background: var(--score-low); }
+.heatmap-score.mid { background: var(--score-mid); }
+.heatmap-score.high { background: var(--score-high); }
+.heatmap-tier-badge { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 600; color: white; }
+.heatmap-priority-bar { width: 80px; height: 6px; background: var(--gray-dark); border-radius: 3px; overflow: hidden; }
+.heatmap-priority-fill { height: 100%; border-radius: 3px; background: var(--primary); }
+.heatmap-table tbody tr { cursor: pointer; transition: background 0.15s; }
+.heatmap-table tbody tr:hover td { background: #EEF0F4; }
+
+/* Dependency */
+.dep-flow { background: var(--bg-card); border-radius: 12px; padding: 32px; border: 1px solid var(--gray-dark); overflow-x: auto; }
+.dep-flow svg { width: 100%; min-width: 1100px; height: 700px; }
+.dep-node { cursor: pointer; transition: opacity 0.2s; }
+.dep-node text { font-family: 'Montserrat', sans-serif; font-size: 14px; font-weight: 700; fill: white; }
+.dep-line { stroke: var(--gray); stroke-width: 1.5; fill: none; transition: stroke 0.2s, stroke-width 0.2s; opacity: 0.4; }
+.dep-line.highlight { stroke: var(--primary); stroke-width: 3; opacity: 1; }
+.dep-name-label { font-family: 'Montserrat', sans-serif; font-size: 9.5px; fill: var(--gray-light); font-weight: 500; }
+.dep-legend-text { font-family: 'Montserrat', sans-serif; font-size: 11px; fill: var(--gray-light); font-weight: 500; }
+.dep-legend-hint { font-family: 'Montserrat', sans-serif; font-size: 10px; fill: var(--gray); font-weight: 400; font-style: italic; }
+
+/* Priorities */
+.priority-card { background: var(--bg-card); border: 1px solid var(--gray-dark); border-radius: 12px; padding: 20px 24px; margin-bottom: 12px; }
+.priority-head { display: grid; grid-template-columns: 40px 1fr auto; gap: 16px; align-items: center; }
+.priority-rank { font-size: 1.5rem; font-weight: 900; color: var(--primary); }
+.priority-info h4 { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+.priority-info p { font-size: 0.8rem; color: var(--gray-light); }
+.priority-impact { text-align: center; }
+.priority-impact .val { font-size: 1.5rem; font-weight: 900; color: var(--primary-light); }
+.priority-impact .lbl { font-size: 0.65rem; color: var(--gray); text-transform: uppercase; }
+.priority-tip { margin-top: 12px; padding: 12px 16px; background: color-mix(in srgb, var(--primary) 8%, transparent); border-radius: 8px; font-size: 0.8rem; color: var(--gray-light); border-left: 3px solid var(--primary); }
+.priority-agent { margin-top: 8px; padding: 10px 14px; background: color-mix(in srgb, var(--tier-optimization) 8%, transparent); border-radius: 8px; font-size: 0.78rem; color: var(--gray-light); border-left: 3px solid var(--tier-optimization); }
+.priority-agent strong { color: var(--tier-optimization); }
+
+/* KI-Agenten Tab */
+.agent-card { background: var(--bg-card); border: 1px solid var(--gray-dark); border-radius: 12px; padding: 24px; margin-bottom: 16px; display: grid; grid-template-columns: 48px 1fr; gap: 16px; }
+.agent-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.4rem; font-weight: 900; color: white; }
+.agent-card h4 { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+.agent-card .agent-desc { font-size: 0.85rem; color: var(--gray-light); margin-bottom: 10px; line-height: 1.5; }
+.agent-card .agent-prompt { background: var(--bg); border: 1px solid var(--gray-dark); border-radius: 6px; padding: 10px 14px; font-size: 0.75rem; font-family: 'SF Mono', 'Fira Code', monospace; color: var(--gray-light); }
+.agent-card .agent-prompt::before { content: 'Beispiel-Prompt: '; color: var(--tier-optimization); font-weight: 600; font-family: 'Montserrat', sans-serif; }
+
+/* Export */
+.export-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-bottom: 40px; }
+.export-card { background: var(--bg-card); border: 1px solid var(--gray-dark); border-radius: 12px; padding: 28px; }
+.export-card h3 { font-size: 1.1rem; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+.export-card p { font-size: 0.85rem; color: var(--gray-light); margin-bottom: 16px; }
+.prompt-preview { background: var(--bg); border: 1px solid var(--gray-dark); border-radius: 8px; padding: 16px; font-size: 0.75rem; color: var(--gray-light); font-family: 'SF Mono', 'Fira Code', monospace; max-height: 200px; overflow-y: auto; margin-bottom: 16px; white-space: pre-wrap; line-height: 1.5; }
+.share-url { background: var(--bg); border: 1px solid var(--gray-dark); border-radius: 8px; padding: 12px 16px; font-size: 0.8rem; color: var(--gray-light); font-family: monospace; width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; margin-bottom: 16px; }
+.copy-feedback { color: var(--score-high); font-size: 0.8rem; font-weight: 600; opacity: 0; transition: opacity 0.3s; margin-left: 8px; }
+.copy-feedback.show { opacity: 1; }
+.akademie-cta { background: linear-gradient(135deg, color-mix(in srgb, var(--primary) 15%, var(--bg-card)), var(--bg-card)); border: 1px solid color-mix(in srgb, var(--primary) 30%, var(--gray-dark)); border-radius: 16px; padding: 32px; text-align: center; margin-top: 40px; }
+.akademie-cta h3 { font-size: 1.3rem; font-weight: 800; color: var(--white); margin-bottom: 8px; }
+.akademie-cta p { color: var(--gray-light); margin-bottom: 20px; max-width: 500px; margin-left: auto; margin-right: auto; }
+
+/* Tooltip */
+.tooltip { position: fixed; background: #FFFFFF; border: 1px solid var(--gray); border-radius: 8px; padding: 12px 16px; font-size: 0.8rem; color: var(--white-muted); max-width: 280px; z-index: 200; pointer-events: none; opacity: 0; transition: opacity 0.15s; box-shadow: 0 8px 24px rgba(0,0,0,0.12); }
+.tooltip.visible { opacity: 1; }
+
+/* Print */
+@media print {
+  body { background: white; color: #222; }
+  .logo-bar, .tier-tabs, .assessment-nav, .results-tabs, .btn-primary, .btn-secondary, .export-grid, .akademie-cta { display: none !important; }
+  .screen { display: block !important; page-break-inside: avoid; padding-top: 20px; min-height: auto; }
+  .screen#screen-landing, .screen#screen-assessment, .screen#screen-export { display: none !important; }
+  .results-panel { display: block !important; page-break-inside: avoid; margin-bottom: 20px; }
+  .container { max-width: 100%; }
+  .tier-bar-track { background: #eee; } .dep-flow { border: 1px solid #ddd; }
+  .heatmap-table td { background: #f8f8f8; } .priority-card, .agent-card { background: #f8f8f8; border-color: #ddd; }
+  .score-circle { border-color: #ddd; } h2, h3, h4 { color: #111 !important; }
+  .print-title { display: block !important; text-align: center; font-size: 1.5rem; font-weight: 800; margin-bottom: 20px; color: #111; }
+}
+.print-title { display: none; }
+
+/* Reset Button */
+.btn-reset { display: inline-flex; align-items: center; gap: 6px; background: transparent; color: var(--gray-light); border: 1px solid var(--gray-dark); padding: 10px 20px; font-size: 0.8rem; font-weight: 600; border-radius: 8px; cursor: pointer; font-family: inherit; transition: all 0.2s; }
+.btn-reset:hover { color: var(--score-low); border-color: var(--score-low); background: color-mix(in srgb, var(--score-low) 8%, transparent); }
+
+/* Tier Tab Badges */
+.tier-tab-badge { font-size: 0.65rem; margin-left: 6px; padding: 1px 6px; border-radius: 10px; background: var(--gray-dark); color: var(--gray-light); font-weight: 600; }
+.tier-tab-badge.complete { background: var(--score-high); color: white; }
+
+/* Celebration Banner */
+.celebration-banner { position: fixed; top: 60px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, var(--score-high), #059669); color: white; padding: 14px 32px; border-radius: 12px; font-weight: 700; font-size: 0.95rem; z-index: 150; box-shadow: 0 8px 32px rgba(34,197,94,0.3); animation: celebrationSlide 0.5s ease; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
+.celebration-banner.show { opacity: 1; pointer-events: auto; }
+@keyframes celebrationSlide { from { transform: translateX(-50%) translateY(-20px); } to { transform: translateX(-50%) translateY(0); } }
+
+/* Copy Prompt Button */
+.agent-prompt-wrap { position: relative; }
+.btn-copy-prompt { position: absolute; top: 8px; right: 8px; background: var(--gray-dark); border: 1px solid var(--gray); color: var(--gray-light); width: 32px; height: 32px; border-radius: 6px; cursor: pointer; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+.btn-copy-prompt:hover { background: var(--gray); color: var(--white); }
+
+/* Dep intro */
+.dep-intro { color: var(--gray-light); font-size: 0.85rem; margin-bottom: 16px; line-height: 1.6; }
+.dep-intro strong { color: var(--white-muted); }
+
+/* Mobile scroll hint */
+.dep-scroll-hint { display: none; text-align: center; font-size: 0.75rem; color: var(--gray); margin-bottom: 12px; padding: 8px; background: color-mix(in srgb, var(--gray-dark) 50%, transparent); border-radius: 6px; }
+@media (max-width: 1200px) { .dep-scroll-hint { display: block; } }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .assessment-layout { grid-template-columns: 1fr; }
+  .radar-sidebar { position: static; order: -1; }
+  .radar-canvas-wrap { width: 220px; height: 220px; }
+}
+@media (max-width: 600px) {
+  .landing-stats { gap: 20px; }
+  .pyramid-tier { font-size: 0.75rem; padding: 10px 14px; }
+  .tier-bars { grid-template-columns: repeat(3, 1fr); }
+  .export-grid { grid-template-columns: 1fr; }
+  .agent-card { grid-template-columns: 1fr; }
+  .needs-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .need-card { padding: 16px 12px; }
+  .need-card .need-icon { font-size: 1.5rem; }
+  .need-card .need-name { font-size: 0.85rem; }
+  .need-card .need-question { font-size: 0.75rem; }
+}
+@media (max-width: 380px) {
+  .needs-grid { grid-template-columns: 1fr; max-width: 280px; }
+}
+
+:root {
+  --primary: #FF1A1A;
+  --primary-light: #E01515;
+  --primary-dark: #CC1515;
+  --tier-vision: #3B82F6;
+  --tier-kompetenz: #22C55E;
+  --tier-prozesse: #F97316;
+  --tier-daten: #EF4444;
+  --tier-impact: #A855F7;
+}
+.nav { position: fixed; top: 0; left: 0; right: 0; background: rgba(255,255,255,0.97); backdrop-filter: blur(10px); padding: 0 24px; display: flex; align-items: center; justify-content: space-between; z-index: 100; border-bottom: 1px solid var(--gray-dark); height: 60px; }
+.nav-logo { font-size: 14px; font-weight: 800; color: var(--primary); letter-spacing: 1.5px; text-transform: uppercase; }
+.nav-links { display: flex; gap: 24px; }
+.nav-links a { font-size: 13px; font-weight: 600; color: var(--gray); text-decoration: none; letter-spacing: 0.5px; transition: color 0.2s; }
+.nav-links a:hover { color: var(--primary); }
+.logo-bar { display: none; }
+</style>
+<link rel="stylesheet" href="AI-Performance-Academy-Farbpalette.css">
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-logo">AI PERFORMANCE ACADEMY</div>
+  <div class="nav-links">
+    <a href="#" onclick="showScreen('landing')">Start</a>
+    <a href="#" onclick="showScreen('assessment')">Assessment</a>
+    <a href="#" onclick="showScreen('results')">Ergebnisse</a>
+    <a href="#" onclick="showScreen('export')">Export</a>
+  </div>
+</nav>
+<div class="tooltip" id="tooltip"></div>
+<div class="celebration-banner" id="celebrationBanner">&#127881; Alle 20 Bausteine bewertet! Schau dir jetzt deine Ergebnisse an.</div>
+
+<!-- SCREEN 1: LANDING -->
+<div class="screen active" id="screen-landing">
+<div class="container">
+  <div class="landing-hero">
+    <div class="landing-needs-section" id="landingNeedsSection">
+      <h1>Was ist deine groesste <span class="accent">KI-Herausforderung</span>?</h1>
+      <p class="subtitle">Waehle dein Ziel — wir zeigen dir, was dich zurueckhaelt.</p>
+      <div class="needs-grid" id="needsGrid"></div>
+      <div class="landing-stats">
+        <div class="landing-stat"><div class="number">20</div><div class="label">Bausteine</div></div>
+        <div class="landing-stat"><div class="number">100</div><div class="label">Checks</div></div>
+        <div class="landing-stat"><div class="number">5</div><div class="label">Minuten</div></div>
+      </div>
+      <div style="margin-top:8px;">
+        <span class="komplett-check-link" onclick="startKomplettCheck()">Oder: Alle 20 Bausteine bewerten &#8594;</span>
+      </div>
+    </div>
+    <div class="landing-pyramid-section" id="landingPyramidSection">
+      <h1>Wie gut ist deine <span class="accent">KI-Strategie</span>?</h1>
+      <p class="subtitle">Bewerte 20 KI-Strategie-Bausteine in 5 Kategorien. Erkenne Staerken, Luecken und erfahre, welche KI-Agenten deine Transformation beschleunigen.</p>
+      <div class="landing-stats">
+        <div class="landing-stat"><div class="number">20</div><div class="label">Bausteine</div></div>
+        <div class="landing-stat"><div class="number">100</div><div class="label">Hypothesen</div></div>
+        <div class="landing-stat"><div class="number">5</div><div class="label">Minuten</div></div>
+      </div>
+      <div class="pyramid" id="pyramidContainer"></div>
+      <button class="btn-primary" onclick="showScreen('assessment')">Komplett-Check starten &#8594;</button>
+      <div style="margin-top:16px;">
+        <span class="komplett-check-link" onclick="showNeedsLanding()">&#8592; Zurueck zur Beduerfnis-Auswahl</span>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- SCREEN 2: ASSESSMENT -->
+<div class="screen" id="screen-assessment">
+<div class="container">
+  <div class="need-header-banner" id="needHeaderBanner" style="display:none"></div>
+  <div class="assessment-header">
+    <h2>Bewerte deine KI-Strategie-Bausteine</h2>
+    <p style="color:var(--gray-light);font-size:0.85rem;margin-bottom:16px">Hake die Aussagen an, die auf dein Unternehmen zutreffen. Der Score berechnet sich automatisch.</p>
+    <div class="progress-bar"><div class="progress-track"><div class="progress-fill" id="assessmentProgress"></div></div><div class="progress-label" id="assessmentProgressLabel">0 / 20</div></div>
+  </div>
+  <div class="assessment-layout">
+    <div class="assessment-sliders">
+      <div class="tier-tabs" id="tierTabs"></div>
+      <div id="sliderGroups"></div>
+      <div class="assessment-nav">
+        <button class="btn-secondary" onclick="showScreen('landing')">&#8592; Zurueck</button>
+        <button class="btn-reset" onclick="resetAssessment()">&#8634; Zuruecksetzen</button>
+        <button class="btn-primary" onclick="showResults()">Ergebnisse anzeigen &#8594;</button>
+      </div>
+    </div>
+    <div class="radar-sidebar">
+      <div class="radar-card">
+        <h3>Live-Uebersicht</h3>
+        <div class="radar-canvas-wrap"><canvas id="miniRadar"></canvas></div>
+        <div class="tier-averages" id="tierAverages"></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- SCREEN 3: RESULTS -->
+<div class="screen" id="screen-results">
+<div class="container">
+  <h2 class="print-title">KI-Strategie Self-Assessment – AI Performance Academy - Ergebnisse</h2>
+  <div class="results-header"><h2>Deine Ergebnisse</h2></div>
+  <div class="overall-score">
+    <div class="score-circle">
+      <svg class="score-circle-ring" viewBox="0 0 160 160">
+        <circle cx="80" cy="80" r="74" stroke="var(--gray-dark)" stroke-width="6" fill="none"/>
+        <circle cx="80" cy="80" r="74" id="scoreRing" stroke="var(--primary)" stroke-width="6" fill="none" stroke-dasharray="465" stroke-dashoffset="465" transform="rotate(-90 80 80)"/>
+      </svg>
+      <div class="score-number" id="overallScoreNum">0</div>
+      <div class="score-percent">%</div>
+    </div>
+    <div class="score-label" id="overallScoreLabel">Gesamt-Score</div>
+  </div>
+  <div class="tier-bars" id="tierBars"></div>
+  <div class="results-tabs" id="resultsTabs">
+    <button class="results-tab active" onclick="showResultTab('radar')">Radar</button>
+    <button class="results-tab" onclick="showResultTab('heatmap')">Heat Map</button>
+    <button class="results-tab" onclick="showResultTab('dependencies')">Abhaengigkeiten</button>
+    <button class="results-tab" onclick="showResultTab('priorities')">Top-5 Prioritaeten</button>
+    <button class="results-tab" onclick="showResultTab('agents')">KI-Agenten</button>
+  </div>
+  <div class="results-panel active" id="panel-radar"><div class="radar-results-wrap"><canvas id="resultsRadar"></canvas></div></div>
+  <div class="results-panel" id="panel-heatmap"><table class="heatmap-table"><thead><tr><th>Baustein</th><th>Tier</th><th>Score</th><th>Level</th><th>Prioritaet</th></tr></thead><tbody id="heatmapBody"></tbody></table></div>
+  <div class="results-panel" id="panel-dependencies">
+    <div class="dep-intro"><strong>So haengen deine KI-Strategie-Bausteine zusammen.</strong> Jeder Kreis ist ein Baustein - die Farbe zeigt den Score (rot = kritisch, gelb = ausbaufaehig, gruen = gut). Groessere Kreise haben mehr abhaengige Bausteine. <strong>Hover ueber einen Kreis</strong> um seine Verbindungen zu sehen.</div>
+    <div class="dep-scroll-hint">&#8592; Horizontal scrollen fuer die volle Ansicht &#8594;</div>
+    <div class="dep-flow" id="depFlow"></div>
+  </div>
+  <div class="results-panel" id="panel-priorities"><div id="prioritiesList"></div></div>
+  <div class="results-panel" id="panel-agents"><div id="agentsList"></div></div>
+  <div class="results-panel" id="panel-needgoal" style="display:none"><div id="needGoalContent"></div></div>
+  <div class="results-panel" id="panel-plan" style="display:none"><div id="planContent"></div></div>
+  <div style="display:flex;gap:12px;justify-content:center;margin-top:32px;flex-wrap:wrap;">
+    <button class="btn-secondary" onclick="showScreen('assessment')">&#8592; Assessment bearbeiten</button>
+    <button class="btn-primary" onclick="showScreen('export')">Export & Teilen &#8594;</button>
+  </div>
+</div>
+</div>
+
+<!-- SCREEN 4: EXPORT -->
+<div class="screen" id="screen-export">
+<div class="container">
+  <div class="results-header"><h2>Export & Teilen</h2></div>
+  <div class="export-grid">
+    <div class="export-card">
+      <h3>KI-Prompt exportieren</h3>
+      <p>Kopiere diesen Prompt in ChatGPT oder Claude fuer eine personalisierte Analyse mit 90-Tage-Aktionsplan und KI-Agent-Empfehlungen.</p>
+      <div class="prompt-preview" id="promptPreview"></div>
+      <button class="btn-secondary" onclick="copyPrompt()">In Zwischenablage kopieren<span class="copy-feedback" id="copyFeedback">Kopiert!</span></button>
+    </div>
+    <div class="export-card">
+      <h3>PDF herunterladen</h3>
+      <p>Drucke deine Ergebnisse als PDF mit Radar-Chart, Heat Map, Prioritaeten und KI-Agent-Empfehlungen.</p>
+      <button class="btn-secondary" onclick="window.print()">PDF drucken (Cmd+P)</button>
+    </div>
+    <div class="export-card">
+      <h3>Link teilen</h3>
+      <p>Teile deine Ergebnisse per Link. Der Empfaenger sieht sofort deine Bewertungen.</p>
+      <div class="share-url" id="shareUrl"></div>
+      <button class="btn-secondary" onclick="copyShareUrl()">Link kopieren<span class="copy-feedback" id="shareFeedback">Kopiert!</span></button>
+    </div>
+  </div>
+  <div class="akademie-cta" id="akademieCta">
+    <h3 id="ctaTitle">Bereit fuer den naechsten Schritt?</h3>
+    <p id="ctaText">Die AI Performance Academy zeigt dir, wie du KI strategisch einsetzt — nicht als Spielerei, sondern als echten Wettbewerbsvorteil.</p>
+    <a href="https://ai-performance.academy" target="_blank" class="btn-primary" style="text-decoration:none;">Mehr erfahren &#8594;</a>
+  </div>
+  <div style="text-align:center;margin-top:24px;"><button class="btn-secondary" onclick="showScreen('results')">&#8592; Zurueck zu Ergebnissen</button></div>
+</div>
+</div>
+
+<script>
+const CONFIG = {"meta":{"id":"ki-strategie-assessment","version":"1.0.0","title":"KI-Strategie Self-Assessment – AI Performance Academy","subtitle":"Waehle dein Ziel — wir zeigen dir, wo du stehst.","description":"Bewerte 20 KI-Strategie-Bausteine in 5 Kategorien. Erkenne Staerken, Luecken und erfahre, wie KI-Agenten deine KI-Transformation beschleunigen.","lang":"de","ogImage":"https://holgergelhausen.github.io/ai-performance-academy-assets/og-assessment.png","faviconLetter":"K","logoBarLabel":"KI-Strategie Assessment","logoUrl":"https://holgergelhausen.github.io/ai-performance-academy-assets/logo-400-transparent.png","academyUrl":"https://ai-performance.academy","academyName":"AI Performance Academy","changelog":[{"version":"1.0.0","date":"2026-02-10","changes":["Initial Release: 20 Bausteine, 5 Tiers, 7 Beduerfnisse","100 Thesen, 100 Empfehlungen, 20 KI-Agenten-Hinweise"]}]},"theme":{"primaryColor":"#FF1A1A","primaryColorLight":"#E01515","primaryColorDark":"#CC1515"},"labels":{"landingHeadline":"Was ist deine groesste","landingAccent":"KI-Herausforderung","landingSubtitle":"Waehle dein Ziel — wir zeigen dir, was dich zurueckhaelt.","komplettCheckHeadline":"Wie gut ist deine","komplettCheckAccent":"KI-Strategie","komplettCheckSubtitle":"Bewerte 20 KI-Strategie-Bausteine in 5 Kategorien. Erkenne Staerken, Luecken und erfahre, welche KI-Agenten deine Transformation beschleunigen.","componentLabel":"Bausteine","checksLabel":"Checks","hypothesesLabel":"Hypothesen","assessmentDuration":"5 Minuten","assessmentTitle":"Bewerte deine KI-Strategie-Bausteine","assessmentSubtitle":"Hake die Aussagen an, die auf dein Unternehmen zutreffen. Der Score berechnet sich automatisch.","thesenHeader":"Trifft das auf euch zu?","resultsTitle":"Deine Ergebnisse","exportTitle":"Export & Teilen","scoreLabels":{"excellent":"Exzellent - Deine KI-Strategie ist vorbildlich","good":"Gut - Solide Basis mit Ausbau-Potenzial","expandable":"Ausbaufaehig - Wichtige Luecken in der KI-Strategie","critical":"Kritisch - KI-Grundlagen muessen erst geschaffen werden"},"needScoreLabels":{"good":"Du bist gut aufgestellt","medium":"Solide Basis — aber Luecken vorhanden","critical":"Kritische Luecken blockieren dein Ziel"},"depIntroText":"So haengen deine KI-Strategie-Bausteine zusammen.","ctaDefaultText":"Die AI Performance Academy zeigt dir, wie du KI strategisch einsetzt — nicht als Spielerei, sondern als echten Wettbewerbsvorteil."},"scoring":{"checkToScoreMap":[1,2,3,4,4,5],"needPrimaryMultiplier":2,"needSecondaryMultiplier":1.3,"needIrrelevantMultiplier":0.3,"dependencyWeight":0.15},"tiers":[{"id":"vision","name":"Vision & Fuehrung","color":"#3B82F6","weight":0.3},{"id":"kompetenz","name":"Kompetenz & Kultur","color":"#22C55E","weight":0.25},{"id":"prozesse","name":"Prozesse & Integration","color":"#F97316","weight":0.2},{"id":"daten","name":"Daten & Infrastruktur","color":"#EF4444","weight":0.15},{"id":"impact","name":"Wertschoepfung & Impact","color":"#A855F7","weight":0.1}],"levels":["Ad-hoc","Bewusst","Strukturiert","Optimiert","KI-nativ"],"components":[{"id":1,"name":"KI-Vision & Roadmap","tier":"vision","desc":"Klare KI-Strategie mit Meilensteinen und Zielen?","related":[2,3,4,9,17],"levels":["Keine Vision","Vage Ideen","Dokumentierte Strategie","Roadmap mit Meilensteinen","Dynamische, KI-getriebene Strategieanpassung"],"theses":["Wir haben eine Vorstellung davon, wie KI unser Unternehmen veraendern koennte.","Es gibt ein Dokument, das unsere KI-Ziele fuer die naechsten 12 Monate beschreibt.","Unsere KI-Roadmap ist mit konkreten Meilensteinen und Verantwortlichkeiten versehen.","Die KI-Strategie wird regelmaessig anhand von Ergebnissen aktualisiert.","KI-Tools helfen uns, unsere eigene KI-Strategie zu analysieren und anzupassen."],"recommendations":["Fuehre ein Team-Brainstorming durch: Wo koennte KI uns am meisten helfen?","Schreibe 3 konkrete KI-Ziele auf, die in 6 Monaten erreichbar sind.","Erstelle eine Roadmap mit Quartalszielen und benenne Verantwortliche.","Etabliere monatliche Reviews der KI-Strategie anhand konkreter KPIs.","Top! Nutze KI-Agenten um Strategie-Hypothesen automatisch zu testen."],"aiAgent":"Ein Strategie-Agent kann Markttrends, Wettbewerber-Aktivitaeten und interne Daten analysieren und Empfehlungen fuer deine KI-Roadmap generieren.","aiPrompt":"Analysiere die KI-Aktivitaeten in [Branche] und erstelle eine priorisierte KI-Roadmap fuer unser Unternehmen."},{"id":2,"name":"Fuehrungskraefte-Commitment","tier":"vision","desc":"Aktive Unterstuetzung der KI-Transformation durch die Fuehrung?","related":[1,3,5,7],"levels":["Kein Interesse","Passive Zustimmung","Aktive Foerderung","Fuehrung als Vorbild","Fuehrung nutzt KI taeglich und inspiriert"],"theses":["Die Geschaeftsfuehrung sieht KI als strategisch relevantes Thema.","Es gibt ein dediziertes Budget fuer KI-Initiativen.","Fuehrungskraefte nutzen KI-Tools selbst im Arbeitsalltag.","KI-Erfolge werden von der Fuehrung sichtbar kommuniziert und gefeiert.","Die Fuehrung treibt KI-Innovation aktiv voran und experimentiert selbst."],"recommendations":["Organisiere eine 30-Minuten-KI-Demo fuer die Geschaeftsfuehrung.","Reserviere ein kleines KI-Pilotbudget (z.B. 5.000 EUR fuer erste Tools).","Starte ein Fuehrungskraefte-Pilotprojekt: Jeder nutzt KI fuer 1 Aufgabe.","Teile KI-Erfolgsgeschichten in der Unternehmenskommunikation.","Stark! Mache KI-Kompetenz zum Bestandteil der Fuehrungskraefte-Entwicklung."],"aiAgent":"Ein Executive-Briefing-Agent kann taegliche KI-Trend-Zusammenfassungen erstellen und Entscheidungsvorlagen fuer KI-Investitionen generieren.","aiPrompt":"Erstelle ein Executive Briefing zu den 5 wichtigsten KI-Entwicklungen dieser Woche mit Relevanz fuer [Branche]."},{"id":3,"name":"Change Management","tier":"vision","desc":"Strukturiertes Veraenderungsmanagement fuer die KI-Transformation?","related":[1,2,5,7,8],"levels":["Kein Plan","Reaktiv","Kommunikationsplan vorhanden","Strukturiertes Programm","Adaptives KI-gestuetztes Change Management"],"theses":["Wir haben darueber gesprochen, wie KI unsere Arbeitsweise veraendern wird.","Es gibt einen Kommunikationsplan, der das Team ueber KI-Initiativen informiert.","Bedenken und Aengste gegenueber KI werden aktiv adressiert.","Es gibt Schulungen und Workshops, die Mitarbeitende auf die Veraenderung vorbereiten.","KI-Tools unterstuetzen den Change-Prozess durch personalisierte Lernpfade."],"recommendations":["Fuehre eine anonyme Umfrage durch: Was denkt das Team ueber KI?","Kommuniziere klar: KI soll unterstuetzen, nicht ersetzen.","Identifiziere Champions im Team, die als KI-Multiplikatoren wirken.","Etabliere ein strukturiertes Change-Programm mit Meilensteinen.","Exzellent! Nutze KI fuer personalisierte Lern- und Veraenderungspfade."],"aiAgent":"Ein Change-Agent kann Stimmungsanalysen aus internen Umfragen auswerten und personalisierte Kommunikationsstrategien fuer verschiedene Teamgruppen vorschlagen.","aiPrompt":"Analysiere diese Mitarbeiter-Feedbacks zu KI und erstelle eine Change-Kommunikationsstrategie fuer verschiedene Zielgruppen."},{"id":4,"name":"KI-Governance & Ethik","tier":"vision","desc":"Klare Regeln fuer den verantwortungsvollen KI-Einsatz?","related":[1,14,16],"levels":["Keine Regeln","Informelle Absprachen","Dokumentierte Richtlinien","Governance-Framework","Automatisierte Compliance-Pruefung"],"theses":["Wir haben uns Gedanken gemacht, wo KI eingesetzt werden darf und wo nicht.","Es gibt Richtlinien fuer den Umgang mit KI-generierten Inhalten.","Datenschutz und Vertraulichkeit sind beim KI-Einsatz klar geregelt.","Es gibt einen definierten Freigabeprozess fuer neue KI-Anwendungen.","Automatisierte Tools pruefen KI-Outputs auf Bias, Compliance und Qualitaet."],"recommendations":["Definiere 3 Grundregeln: Was darf mit KI gemacht werden, was nicht?","Erstelle eine einfache KI-Nutzungsrichtlinie (1-2 Seiten genuegen).","Klaere mit der Rechtsabteilung: Datenschutz und IP-Rechte bei KI-Nutzung.","Implementiere einen Freigabeprozess fuer neue KI-Tools und -Anwendungen.","Top! Nutze KI-Tools fuer automatisierte Compliance- und Qualitaetspruefungen."],"aiAgent":"Ein Governance-Agent kann KI-Outputs auf Compliance, Bias und Datenschutz pruefen und automatische Freigabeempfehlungen generieren.","aiPrompt":"Pruefe diese KI-generierten Inhalte auf Bias, Datenschutzrisiken und Markenkonformitaet."},{"id":5,"name":"KI-Grundwissen im Team","tier":"kompetenz","desc":"Grundlegendes KI-Verstaendnis bei allen Mitarbeitenden?","related":[2,3,6,7,8],"levels":["Kein Wissen","Einzelne Interessierte","Basis-Schulung absolviert","Team versteht KI-Moeglichkeiten","Alle nutzen KI kompetent im Alltag"],"theses":["Mitarbeitende wissen, was KI grundsaetzlich kann und was nicht.","Das Team kennt die wichtigsten KI-Tools, die fuer unsere Branche relevant sind.","Es gab mindestens eine strukturierte KI-Schulung fuer das Team.","Mitarbeitende koennen eigenstaendig einschaetzen, wo KI ihnen helfen kann.","KI-Kompetenz wird regelmaessig aufgefrischt und ist fester Bestandteil der Weiterbildung."],"recommendations":["Organisiere einen 2-Stunden-Workshop: KI-Grundlagen fuer alle.","Erstelle eine Liste der 5 KI-Tools, die fuer euer Team am relevantesten sind.","Fuehre eine strukturierte Schulungsreihe mit Praxisuebungen durch.","Etabliere ein monatliches KI-Update im Team-Meeting.","Stark! Mache KI-Kompetenz zum festen Bestandteil der Personalentwicklung."],"aiAgent":"Ein Lernpfad-Agent kann individuelle KI-Schulungsplaene basierend auf Rolle und Vorwissen erstellen und Lernfortschritte tracken.","aiPrompt":"Erstelle einen individuellen KI-Lernpfad fuer einen [Jobrolle] mit Kenntnisstand [Anfaenger/Fortgeschritten]."},{"id":6,"name":"Prompt Engineering","tier":"kompetenz","desc":"Faehigkeit, KI durch gute Prompts effektiv zu steuern?","related":[5,8,9,12],"levels":["Kein Prompting","Copy-Paste Prompts","Eigene Prompts formulieren","Systematisches Prompt-Design","Prompt-Bibliothek + automatische Optimierung"],"theses":["Mitarbeitende wissen, dass die Qualitaet des Prompts die KI-Antwort bestimmt.","Es gibt Beispiel-Prompts fuer die haeufigsten Anwendungsfaelle.","Mitarbeitende koennen Prompts iterativ verbessern, wenn das Ergebnis nicht passt.","Es gibt eine gemeinsame Prompt-Bibliothek mit Best Practices.","KI-Tools optimieren Prompts automatisch und schlagen bessere Formulierungen vor."],"recommendations":["Zeige dem Team den Unterschied: Schlechter Prompt vs. guter Prompt.","Sammle 10 Best-Practice-Prompts fuer die haeufigsten Team-Aufgaben.","Fuehre Prompt-Engineering-Workshops mit konkreten Uebungen durch.","Baue eine zentrale Prompt-Bibliothek auf, die das Team gemeinsam pflegt.","Exzellent! Setze Meta-Prompting und automatische Prompt-Optimierung ein."],"aiAgent":"Ein Prompt-Coach-Agent kann Prompts analysieren, verbessern und eine Best-Practice-Bibliothek pflegen, die sich an eurem Kontext orientiert.","aiPrompt":"Analysiere diesen Prompt und verbessere ihn nach Best Practices. Erklaere, warum die Aenderungen bessere Ergebnisse liefern."},{"id":7,"name":"Experimentier-Kultur","tier":"kompetenz","desc":"Offenheit fuer KI-Experimente und Lernen aus Fehlern?","related":[2,3,5,8,19],"levels":["Angst vor Fehlern","Einzelne Mutige","Pilotprojekte erlaubt","Experimentieren ermutigt","Systematische Innovationskultur mit KI"],"theses":["Es ist in Ordnung, mit KI-Tools zu experimentieren, auch wenn nicht alles klappt.","Mitarbeitende duerfen Arbeitszeit fuer KI-Experimente verwenden.","Es gibt Pilotprojekte, in denen KI-Anwendungen getestet werden.","KI-Erkenntnisse werden im Team geteilt — Erfolge und Fehlschlaege.","Es gibt ein strukturiertes Innovationsprogramm mit KI-Experimentier-Sprints."],"recommendations":["Kommuniziere: Es ist erlaubt und erwuenscht, KI auszuprobieren.","Reserviere 2 Stunden pro Woche als Experimentierzeit fuer das Team.","Starte 3 Pilotprojekte: Klein, messbar, in verschiedenen Bereichen.","Etabliere einen monatlichen KI-Show-and-Tell fuer Erfahrungsaustausch.","Top! Implementiere Innovation Sprints mit definierten KI-Experimenten."],"aiAgent":"Ein Innovation-Scout-Agent kann neue KI-Tools in eurer Branche identifizieren und Experimentiervorschlaege mit Aufwand-Nutzen-Schaetzung liefern.","aiPrompt":"Finde 5 neue KI-Anwendungsfaelle fuer [Branche/Abteilung] mit geschaetztem Aufwand und potenziellem Nutzen."},{"id":8,"name":"Wissensaustausch & Community","tier":"kompetenz","desc":"Interner Wissenstransfer und KI-Community?","related":[3,5,6,7],"levels":["Keine Kommunikation","Informeller Austausch","KI-Kanal vorhanden","Aktive Community of Practice","KI-gestuetzte Wissensplattform"],"theses":["Mitarbeitende tauschen sich ueber ihre KI-Erfahrungen aus.","Es gibt einen dedizierten Kanal (Slack, Teams) fuer KI-Themen.","Regelmaessig finden KI-bezogene Treffen oder Workshops statt.","Es gibt identifizierte KI-Champions oder eine Community of Practice.","Eine KI-gestuetzte Plattform kuratiert und empfiehlt relevantes Wissen automatisch."],"recommendations":["Erstelle einen KI-Kanal in eurem Chat-Tool und poste die erste Erkenntnis.","Organisiere einen monatlichen KI-Lunch-and-Learn (30 Minuten genuegen).","Identifiziere 3-5 KI-Champions, die als Ansprechpartner fungieren.","Gruende eine Community of Practice mit regelmaessigen Treffen.","Stark! Nutze eine KI-Wissensplattform, die Learnings automatisch aufbereitet."],"aiAgent":"Ein Knowledge-Management-Agent kann interne KI-Erfahrungen sammeln, aufbereiten und personalisiert an die richtigen Mitarbeitenden verteilen.","aiPrompt":"Erstelle aus diesen 20 internen KI-Erfahrungsberichten ein Best-Practice-Dokument mit den wichtigsten Learnings."},{"id":9,"name":"Workflow-Analyse & Use Cases","tier":"prozesse","desc":"Systematische Identifikation von KI-Einsatzmoeglichkeiten?","related":[1,6,10,11,17],"levels":["Keine Analyse","Gelegentliches Suchen","Use-Case-Sammlung","Priorisierte Pipeline","KI-gestuetzte automatische Use-Case-Erkennung"],"theses":["Wir haben Bereiche identifiziert, in denen KI uns helfen koennte.","Es gibt eine dokumentierte Liste von KI-Use-Cases fuer unser Unternehmen.","Use Cases sind nach Aufwand, Nutzen und Machbarkeit bewertet.","Es gibt eine priorisierte Pipeline von KI-Projekten mit Zeitplaenen.","KI-Tools analysieren unsere Workflows automatisch und finden Optimierungspotenziale."],"recommendations":["Mache ein Brainstorming: Welche Aufgaben wiederholen sich am meisten?","Dokumentiere die Top-10 Use Cases mit geschaetztem Zeitersparnis-Potenzial.","Bewerte jeden Use Case nach ICE-Score (Impact, Confidence, Ease).","Erstelle eine Quartals-Roadmap mit den Top-5 priorisierten Use Cases.","Exzellent! Nutze KI-Process-Mining um automatisch Optimierungspotenziale zu finden."],"aiAgent":"Ein Process-Mining-Agent kann Arbeitsablaeufe analysieren, repetitive Muster finden und konkrete KI-Automatisierungsvorschlaege mit ROI-Schaetzung liefern.","aiPrompt":"Analysiere diesen Arbeitsablauf und identifiziere die 5 Schritte mit dem hoechsten KI-Automatisierungspotenzial."},{"id":10,"name":"Tool-Landschaft & Auswahl","tier":"prozesse","desc":"Durchdachte Auswahl und Integration von KI-Tools?","related":[9,11,13,15],"levels":["Keine KI-Tools","Einzelne freie Tools","Bewusste Auswahl","Integrierte Tool-Landschaft","KI-Plattform mit nahtloser Integration"],"theses":["Mitarbeitende nutzen KI-Tools — auch wenn nur frei verfuegbare.","Es gibt bewusst ausgewaehlte KI-Tools fuer die wichtigsten Anwendungsfaelle.","Die KI-Tool-Auswahl orientiert sich an Datenschutz, Kosten und Integration.","KI-Tools sind in bestehende Systeme (CRM, ERP, Office) integriert.","Eine KI-Plattform orchestriert verschiedene Tools und Agenten nahtlos."],"recommendations":["Erstelle eine Bestandsaufnahme: Welche KI-Tools werden bereits genutzt?","Evaluiere 3 KI-Tools fuer euren wichtigsten Use Case nach definierten Kriterien.","Pruefe Integration: Passen die Tools in eure bestehende IT-Landschaft?","Implementiere API-Verbindungen zwischen KI-Tools und Kernsystemen.","Top! Baue eine zentrale KI-Plattform mit orchestrierten Agenten auf."],"aiAgent":"Ein Tool-Evaluierungs-Agent kann KI-Tools nach euren Kriterien vergleichen und Empfehlungen mit Vor- und Nachteilen liefern.","aiPrompt":"Vergleiche [Tool A], [Tool B] und [Tool C] fuer [Anwendungsfall] nach Datenschutz, Kosten, Integration und Benutzerfreundlichkeit."},{"id":11,"name":"Prozess-Automatisierung","tier":"prozesse","desc":"Systematische Automatisierung repetitiver Aufgaben mit KI?","related":[9,10,12,18],"levels":["Keine Automatisierung","Einzelne Makros","KI-gestuetzte Teilautomatisierung","Durchgaengige Workflow-Automatisierung","Autonome KI-Agenten fuer Kernprozesse"],"theses":["Wir haben mindestens eine Aufgabe teilweise mit KI automatisiert.","Es gibt definierte Workflows, in denen KI regelmaessig eingesetzt wird.","Automatisierte KI-Workflows sparen dem Team messbar Zeit.","KI-Automatisierung ist in Kernprozesse integriert und laeuft zuverlaessig.","Autonome KI-Agenten uebernehmen komplette Prozessschritte eigenstaendig."],"recommendations":["Automatisiere eine einfache Aufgabe: Z.B. E-Mail-Zusammenfassungen mit KI.","Identifiziere 3 Workflows, die sich fuer KI-Automatisierung eignen.","Implementiere einen durchgaengigen KI-Workflow mit definierten Checkpoints.","Integriere KI-Automatisierung in eure Kernprozesse mit Monitoring.","Stark! Setze autonome KI-Agenten ein, die Prozesse eigenstaendig steuern."],"aiAgent":"Ein Workflow-Agent kann n8n-, Make- oder Zapier-Workflows mit KI-Knoten entwerfen und bestehende Automatisierungen optimieren.","aiPrompt":"Entwirf einen automatisierten Workflow fuer [Prozess] mit KI-Integration an den richtigen Stellen."},{"id":12,"name":"Qualitaetssicherung KI-Output","tier":"prozesse","desc":"Systematische Pruefung und Verbesserung von KI-Ergebnissen?","related":[4,6,11,16],"levels":["Keine Pruefung","Gelegentliches Gegenlesen","Definierter Review-Prozess","Quality Gates mit KPIs","Automatisierte KI-Qualitaetskontrolle"],"theses":["KI-generierte Inhalte werden vor Verwendung von einem Menschen geprueft.","Es gibt klare Kriterien, wann ein KI-Output gut genug ist.","Der Review-Prozess fuer KI-Outputs ist definiert und dokumentiert.","Es gibt messbare Quality Gates, die KI-Outputs bestehen muessen.","KI-Tools pruefen KI-Outputs automatisch auf Qualitaet, Fakten und Konsistenz."],"recommendations":["Etabliere die Grundregel: Jeder KI-Output wird vor Nutzung gecheckt.","Definiere 5 Qualitaetskriterien fuer KI-generierte Inhalte in eurem Kontext.","Dokumentiere den Review-Prozess: Wer prueft was wann?","Fuehre Quality Scores ein und tracke die Qualitaet ueber Zeit.","Exzellent! Nutze KI-Checker die automatisch Fakten und Konsistenz pruefen."],"aiAgent":"Ein QA-Agent kann KI-Outputs auf Faktentreue, Markenkonformitaet, Bias und Qualitaet pruefen und Verbesserungsvorschlaege generieren.","aiPrompt":"Pruefe diesen KI-generierten Text auf Faktenfehler, Inkonsistenzen und Markenkonformitaet."},{"id":13,"name":"Datenverfuegbarkeit & Qualitaet","tier":"daten","desc":"Zugriff auf qualitativ hochwertige Daten fuer KI-Anwendungen?","related":[10,14,15,16],"levels":["Daten-Chaos","Teildaten verfuegbar","Strukturierte Datenbasis","Datenqualitaets-Management","Data Mesh mit KI-Governance"],"theses":["Wir wissen, welche Daten wir haben und wo sie liegen.","Die wichtigsten Daten sind digital und strukturiert verfuegbar.","Datenqualitaet wird regelmaessig geprueft und bereinigt.","Verschiedene Datenquellen sind miteinander verknuepft und zugaenglich.","KI-Tools bereinigen, verknuepfen und analysieren unsere Daten automatisch."],"recommendations":["Erstelle eine Bestandsaufnahme: Welche Daten habt ihr wo?","Digitalisiere die wichtigsten Datenquellen und bringe sie in ein System.","Etabliere regelmaessige Daten-Audits und Bereinigungsroutinen.","Verbinde Datensilos: CRM, ERP, Marketing-Tools miteinander verknuepfen.","Top! Implementiere ein Data-Mesh mit automatischer KI-Datenqualitaetssicherung."],"aiAgent":"Ein Datenqualitaets-Agent kann eure Datenquellen analysieren, Luecken identifizieren, Dubletten finden und Verknuepfungen vorschlagen.","aiPrompt":"Analysiere die Datenqualitaet in unserem CRM: Wie viel Prozent der Datensaetze sind vollstaendig und aktuell?"},{"id":14,"name":"Datenschutz & Compliance","tier":"daten","desc":"Konformer Umgang mit Daten bei KI-Nutzung?","related":[4,13,15],"levels":["Kein Bewusstsein","Grundwissen vorhanden","DSGVO-konforme Prozesse","Zertifizierte Compliance","Automatisierte Privacy-by-Design"],"theses":["Wir wissen, dass beim KI-Einsatz Datenschutz eine Rolle spielt.","Mitarbeitende kennen die Grundregeln: Keine vertraulichen Daten in externe KI-Tools.","Es gibt dokumentierte Prozesse fuer DSGVO-konforme KI-Nutzung.","KI-Anbieter werden auf Datenschutz-Konformitaet geprueft und dokumentiert.","Automatisierte Tools stellen Privacy-by-Design bei KI-Anwendungen sicher."],"recommendations":["Briefing fuer alle: Was darf in externe KI-Tools eingegeben werden, was nicht?","Erstelle eine einfache Checkliste: Datenschutz bei KI-Nutzung.","Dokumentiere die Datenschutz-Konformitaet aller genutzten KI-Tools.","Lass eure KI-Nutzung von einem Datenschutzbeauftragten pruefen.","Stark! Implementiere automatisierte Datenschutz-Pruefungen fuer alle KI-Workflows."],"aiAgent":"Ein Privacy-Agent kann KI-Workflows auf Datenschutz-Konformitaet pruefen, PII in Daten erkennen und DSGVO-konforme Alternativen vorschlagen.","aiPrompt":"Pruefe diesen KI-Workflow auf DSGVO-Risiken und schlage datenschutzkonforme Alternativen vor."},{"id":15,"name":"IT-Infrastruktur & Skalierung","tier":"daten","desc":"Technische Basis fuer produktive KI-Nutzung?","related":[10,13,14],"levels":["Keine Infrastruktur","Standard-Cloud-Tools","KI-faehige Infrastruktur","Skalierbare KI-Plattform","Enterprise-KI-Infrastruktur mit MLOps"],"theses":["Mitarbeitende haben Zugang zu KI-Tools ueber Browser oder Apps.","KI-relevante Systeme sind ueber Cloud-Dienste verfuegbar.","APIs verbinden KI-Tools mit internen Systemen.","Die Infrastruktur skaliert mit steigendem KI-Einsatz ohne Engpaesse.","Es gibt eine Enterprise-KI-Plattform mit MLOps, Monitoring und Governance."],"recommendations":["Stelle sicher, dass alle Mitarbeitenden Zugang zu mindestens einem KI-Tool haben.","Evaluiere Cloud-Loesungen, die KI-Integration standardmaessig anbieten.","Implementiere API-Verbindungen fuer die wichtigsten KI-Integrationen.","Teste die Skalierbarkeit: Was passiert, wenn alle gleichzeitig KI nutzen?","Exzellent! Baue eine Enterprise-Plattform mit Monitoring und Governance auf."],"aiAgent":"Ein Infrastruktur-Agent kann eure IT-Landschaft analysieren und eine optimale KI-Infrastruktur-Architektur mit Migrationspfad vorschlagen.","aiPrompt":"Analysiere unsere IT-Infrastruktur und erstelle eine KI-Infrastruktur-Roadmap mit Kosten und Zeitplan."},{"id":16,"name":"Firmenwissen & Knowledge Base","tier":"daten","desc":"Firmenwissen fuer KI zugaenglich und nutzbar?","related":[4,12,13],"levels":["Wissen in Koepfen","Teils dokumentiert","Zentrale Wissensbasis","KI-durchsuchbar","RAG-gestuetzte KI auf Firmenwissen"],"theses":["Wichtiges Firmenwissen ist irgendwo dokumentiert (Wiki, Dokumente, etc.).","Es gibt eine zentrale Wissensbasis, auf die das Team zugreifen kann.","Die Wissensbasis wird aktiv gepflegt und regelmaessig aktualisiert.","KI-Tools koennen auf die Wissensbasis zugreifen und daraus antworten.","Ein RAG-System macht Firmenwissen fuer KI-Agenten nutzbar."],"recommendations":["Starte ein Wiki fuer die wichtigsten Prozesse und Wissensartikel.","Dokumentiere die Top-20 Fragen, die neue Mitarbeitende immer stellen.","Etabliere einen Prozess: Neues Wissen wird zeitnah dokumentiert.","Verbinde eure Wissensbasis mit einem KI-Chatbot fuer schnelle Antworten.","Top! Implementiere ein RAG-System, das Firmenwissen fuer KI-Agenten zugaenglich macht."],"aiAgent":"Ein Knowledge-Base-Agent kann Dokumente indexieren, Wissensluecken identifizieren und als KI-Assistent Fragen auf Basis eures Firmenwissens beantworten.","aiPrompt":"Erstelle aus diesen 50 Dokumenten eine strukturierte Knowledge Base mit Kategorien und FAQ."},{"id":17,"name":"ROI-Messung & KPIs","tier":"impact","desc":"Messung des konkreten Nutzens von KI-Initiativen?","related":[1,9,18,19],"levels":["Keine Messung","Anekdotische Berichte","Basis-Tracking","KPI-Dashboard","Automatisierte ROI-Berechnung in Echtzeit"],"theses":["Wir haben eine Vorstellung davon, ob KI uns etwas bringt.","Fuer mindestens ein KI-Projekt koennen wir den Nutzen benennen.","Es gibt definierte KPIs, an denen wir KI-Erfolg messen.","Ein Dashboard zeigt den ROI unserer KI-Initiativen transparent.","KI-Tools berechnen den ROI automatisch und prognostizieren Impact."],"recommendations":["Definiere fuer ein KI-Projekt: Was ist das Ziel? Wie messen wir Erfolg?","Tracke Zeitersparnis durch KI fuer mindestens 3 Anwendungsfaelle.","Erstelle KPIs: Zeitersparnis, Qualitaetsverbesserung, Kostensenkung.","Baue ein einfaches Dashboard mit den wichtigsten KI-ROI-Kennzahlen.","Stark! Implementiere automatisierte ROI-Berechnung und Prognosemodelle."],"aiAgent":"Ein ROI-Agent kann Nutzungsdaten aller KI-Tools aggregieren, Zeitersparnis berechnen und den monetaeren Impact als Dashboard aufbereiten.","aiPrompt":"Berechne den ROI unserer KI-Initiativen basierend auf: Zeitersparnis, Kosten und Output-Qualitaet."},{"id":18,"name":"Produktivitaetsgewinne","tier":"impact","desc":"Messbare Steigerung der Arbeitsproduktivitaet durch KI?","related":[9,11,17,20],"levels":["Kein Effekt","Einzelne Zeiteinsparungen","Messbare Beschleunigung","Systematische Produktivitaetssteigerung","KI als Produktivitaetsmultiplikator"],"theses":["KI spart einzelnen Mitarbeitenden Zeit bei bestimmten Aufgaben.","Die Zeitersparnis durch KI ist fuer mehrere Aufgaben dokumentiert.","Durch KI-Einsatz werden Projekte messbar schneller abgeschlossen.","Die Produktivitaetssteigerung ist teamweit spuerbar und messbar.","KI wirkt als Multiplikator: Gleiche Teamgroesse, deutlich mehr Output."],"recommendations":["Messe die Zeit fuer 3 Aufgaben: Einmal mit, einmal ohne KI.","Dokumentiere die Top-5 Zeitfresser, die KI beschleunigen koennte.","Setze KI systematisch fuer die zeitintensivsten Routine-Aufgaben ein.","Tracke die Produktivitaet des Teams vor und nach KI-Einfuehrung.","Exzellent! Nutze KI-Analytics um versteckte Produktivitaetspotenziale aufzudecken."],"aiAgent":"Ein Produktivitaets-Agent kann Arbeitszeiten analysieren, Bottlenecks identifizieren und konkrete KI-Automatisierungen mit Zeitersparnis-Prognose vorschlagen.","aiPrompt":"Analysiere die Zeitverteilung in unserem Team und identifiziere die 5 groessten Zeitfresser mit KI-Potenzial."},{"id":19,"name":"Innovationsfoerderung","tier":"impact","desc":"KI als Treiber fuer neue Produkte, Services und Geschaeftsmodelle?","related":[1,7,9,20],"levels":["Keine Innovation","Einzelne Ideen","KI-gestuetzte Ideation","Prototyping mit KI","KI-native Geschaeftsmodelle"],"theses":["KI hat uns auf neue Ideen fuer Produkte oder Services gebracht.","Wir nutzen KI aktiv im Ideation-Prozess fuer neue Angebote.","Mit KI erstellen wir schneller Prototypen und testen Konzepte.","KI ermoeglicht uns Angebote, die ohne KI nicht moeglich waeren.","Wir haben KI-native Geschaeftsmodelle entwickelt oder transformiert."],"recommendations":["Nutze KI fuer ein Brainstorming: 50 Ideen in 30 Minuten generieren.","Teste eine Idee: Erstelle mit KI einen Prototyp in einem Tag.","Implementiere einen systematischen KI-Ideation-Prozess mit dem Team.","Pruefe: Welche neuen Angebote werden erst durch KI moeglich?","Top! Entwickle KI-native Produkte und Geschaeftsmodelle."],"aiAgent":"Ein Innovation-Agent kann Marktluecken identifizieren, Produktideen generieren, Konzepte validieren und Prototypen in Stunden statt Wochen erstellen.","aiPrompt":"Generiere 10 innovative KI-basierte Service-Ideen fuer [Branche] basierend auf aktuellen Markttrends."},{"id":20,"name":"Skalierung & Verbreitung","tier":"impact","desc":"KI-Erfolge im gesamten Unternehmen skalieren?","related":[7,17,18,19],"levels":["Kein Rollout","Einzelne Power-User","Abteilungs-Rollout","Unternehmensweite Nutzung","KI als Kernkompetenz der Organisation"],"theses":["Einzelne KI-Erfolge sind bekannt und wurden geteilt.","Erfolgreiche KI-Anwendungen werden aktiv auf andere Teams uebertragen.","Es gibt einen Rollout-Plan fuer die Skalierung von KI-Initiativen.","KI wird unternehmensweit als Standardwerkzeug eingesetzt.","KI-Kompetenz ist Teil der Unternehmens-DNA und Kernkompetenz."],"recommendations":["Teile den ersten KI-Erfolg: Case Study im naechsten All-Hands-Meeting.","Identifiziere 3 Teams, die vom erfolgreichsten KI-Use-Case profitieren.","Erstelle einen Rollout-Plan: Welche Abteilung bekommt wann KI-Support?","Standardisiere erfolgreiche KI-Workflows als Templates fuer alle.","Stark! Mache KI-Kompetenz zur Kernkompetenz mit Karrierepfaden."],"aiAgent":"Ein Rollout-Agent kann KI-Erfolge dokumentieren, Transferpotenziale identifizieren und Skalierungsplaene mit Meilensteinen erstellen.","aiPrompt":"Erstelle einen Rollout-Plan fuer [KI-Use-Case] auf alle Abteilungen mit Zeitplan und Ressourcen."}],"needs":[{"id":"einstieg","name":"Wo anfangen?","color":"#22C55E","icon":"🚀","question":"Wie starten wir mit KI?","desc":"Den richtigen Einstieg in die KI-Transformation finden","primary":[1,5,6,9,10],"secondary":[2,3,7,8],"context":{"1":"Ohne KI-Vision weisst du nicht, wohin die Reise geht.","2":"Ohne Fuehrungskraefte-Commitment fehlt das Budget und die Erlaubnis.","3":"Change Management verhindert, dass das Team blockiert.","5":"Grundwissen ist die Voraussetzung fuer jeden KI-Einsatz.","6":"Prompt Engineering ist die Schluesselfaehigkeit fuer KI-Nutzung.","7":"Eine Experimentierkultur erlaubt Fehler und foerdert Lernen.","8":"Wissensaustausch beschleunigt den Lernprozess im ganzen Team.","9":"Use Cases zeigen, wo KI den groessten Hebel hat.","10":"Die richtige Tool-Auswahl entscheidet ueber Erfolg oder Frust."},"impactStatements":{"1":{"low":"Du weisst nicht, wohin die KI-Reise gehen soll.","high":"Deine KI-Vision gibt dem ganzen Team eine klare Richtung."},"5":{"low":"Dein Team versteht nicht, was KI kann — und was nicht.","high":"Dein Team hat ein solides KI-Grundverstaendnis."},"6":{"low":"Schlechte Prompts liefern schlechte Ergebnisse — Frust statt Fortschritt.","high":"Dein Team weiss, wie man KI effektiv steuert."},"9":{"low":"Du probierst KI an den falschen Stellen aus.","high":"Du weisst genau, wo KI den groessten Hebel hat."},"10":{"low":"Tool-Wildwuchs statt strategischer Auswahl.","high":"Die richtigen Tools fuer die richtigen Aufgaben."}},"actionPlan":{"month1":"Grundlagen: KI-Workshop + erste Prompting-Uebungen + 3 Use Cases identifizieren","month2":"Piloten: 2 Tools evaluieren + ersten Piloten starten + Prompt-Bibliothek anlegen","month3":"Verankerung: Roadmap erstellen + KI-Kanal einrichten + Ergebnisse teilen"},"cta":{"title":"Der Start ist der schwierigste Schritt","text":"Die AI Performance Academy begleitet dich vom ersten KI-Experiment bis zur strategischen Integration.","btn":"KI-Einstieg planen"}},{"id":"produktivitaet","name":"Mehr Produktivitaet","color":"#3B82F6","icon":"⚡","question":"Wie werden wir mit KI schneller?","desc":"Arbeitsproduktivitaet durch KI-Einsatz messbar steigern","primary":[6,9,10,11,12,16,18],"secondary":[1,5,7,8,17],"context":{"1":"Eine KI-Vision fokussiert den Einsatz auf die wirkungsvollsten Bereiche.","5":"Grundwissen befaehigt das Team, KI eigenstaendig einzusetzen.","6":"Gute Prompts liefern in Sekunden, was sonst Stunden dauert.","7":"Experimentierfreude findet die besten Produktivitaets-Hacks.","8":"Best Practices werden im Team geteilt — alle profitieren.","9":"Use-Case-Analyse zeigt die groessten Zeitfresser.","10":"Die richtigen Tools machen den Unterschied.","11":"Automatisierung eliminiert repetitive Arbeit.","12":"Qualitaetssicherung verhindert Nacharbeit.","16":"Firmenwissen in der KI spart Recherche-Zeit.","17":"ROI-Messung zeigt, wo KI am meisten bringt.","18":"Produktivitaetsgewinne muessen gemessen und skaliert werden."},"impactStatements":{"6":{"low":"Dein Team kaempft mit KI statt von ihr zu profitieren.","high":"Jeder im Team kann KI als Produktivitaetshebel nutzen."},"9":{"low":"KI wird an den falschen Stellen eingesetzt — kein messbarer Effekt.","high":"Jeder KI-Einsatz ist auf maximale Wirkung ausgerichtet."},"10":{"low":"Jeder nutzt andere Tools — kein einheitlicher Workflow.","high":"Die Tool-Landschaft ist optimiert und integriert."},"11":{"low":"Repetitive Aufgaben fressen die Zeit des Teams.","high":"KI-Automatisierung befreit das Team von Routinearbeit."},"12":{"low":"Schlechte KI-Outputs erzeugen mehr Arbeit statt weniger.","high":"Quality Gates stellen konsistent hohe Qualitaet sicher."},"16":{"low":"Firmenwissen liegt in Silos — KI kann es nicht nutzen.","high":"KI-Agenten greifen auf euer gesamtes Firmenwissen zu."},"18":{"low":"Produktivitaetsgewinne bleiben Einzelfaelle.","high":"KI ist ein systematischer Produktivitaetsmultiplikator."}},"actionPlan":{"month1":"Analyse: Top-5 Zeitfresser identifizieren + Prompting-Training fuer das Team","month2":"Automatisieren: Erste 3 Workflows mit KI automatisieren + Prompt-Bibliothek","month3":"Skalieren: KI in Kernprozesse integrieren + Produktivitaet messen + Learnings teilen"},"cta":{"title":"Dein Team koennte mit KI doppelt so produktiv sein","text":"Die AI Performance Academy zeigt dir, welche KI-Workflows sofort Zeit sparen.","btn":"Produktivitaet steigern"}},{"id":"innovation","name":"Innovation & Wettbewerb","color":"#F97316","icon":"💡","question":"Wie nutzen wir KI als Wettbewerbsvorteil?","desc":"KI fuer neue Produkte, Services und Geschaeftsmodelle nutzen","primary":[1,7,9,10,19,20],"secondary":[2,5,6,11,17],"context":{"1":"Eine KI-Vision zeigt, welche Innovationen moeglich sind.","2":"Fuehrungskraefte-Commitment gibt Innovationen Rueckenwind.","5":"KI-Wissen im Team ist die Basis fuer innovative Ideen.","6":"Prompt Engineering ermoeglicht schnelles Prototyping.","7":"Eine Experimentierkultur ist der Naehrboden fuer Innovation.","9":"Use-Case-Analyse deckt Innovationspotenziale auf.","10":"Die richtige Tool-Landschaft ermoeglicht schnelle Umsetzung.","11":"Automatisierung setzt Ressourcen fuer Innovation frei.","17":"ROI-Messung zeigt, welche Innovationen skalierbar sind.","19":"Systematische Innovationsfoerderung statt Zufallstreffer.","20":"Erfolgreiche Innovationen muessen skaliert werden."},"impactStatements":{"1":{"low":"Ohne KI-Vision verpasst du die naechste Innovationswelle.","high":"Deine KI-Vision treibt gezielte Innovation voran."},"7":{"low":"Angst vor Fehlern erstickt jede Innovation im Keim.","high":"Dein Team experimentiert furchtlos mit neuen KI-Moeglichkeiten."},"9":{"low":"Du suchst Use Cases statt sie systematisch zu finden.","high":"Eine priorisierte Pipeline liefert staendig neue Innovationschancen."},"10":{"low":"Fehlende Tools bremsen die Umsetzung von Ideen.","high":"Die richtige Tool-Landschaft ermoeglicht schnelle Prototypen."},"19":{"low":"KI-Innovation ist Zufall statt System.","high":"Systematische Ideation liefert staendig neue Geschaeftschancen."},"20":{"low":"Gute Ideen bleiben Einzelfaelle ohne Breitenwirkung.","high":"Erfolgreiche KI-Innovationen werden konsequent skaliert."}},"actionPlan":{"month1":"Ideation: KI-Brainstorming + Wettbewerbs-Scan + Innovation Backlog anlegen","month2":"Prototypen: Top-3 Ideen als KI-Prototypen umsetzen + testen","month3":"Skalieren: Validierte Ideen in Produkte uebersetzen + Rollout planen"},"cta":{"title":"Dein Wettbewerb nutzt KI bereits — und du?","text":"Die AI Performance Academy zeigt dir, wie KI zum echten Wettbewerbsvorteil wird.","btn":"Innovationsvorsprung sichern"}},{"id":"mitarbeiter","name":"Team mitnehmen","color":"#EC4899","icon":"👥","question":"Wie begeistern wir das Team fuer KI?","desc":"Mitarbeitende befaehigen und Akzeptanz fuer KI schaffen","primary":[2,3,5,6,7,8],"secondary":[1,4,9,12],"context":{"1":"Eine klare Vision gibt dem Team Orientierung und Sicherheit.","2":"Fuehrungskraefte als Vorbild sind der staerkste Hebel.","3":"Change Management adressiert Aengste und Widerstaende.","4":"Klare Regeln schaffen Sicherheit bei der KI-Nutzung.","5":"Grundwissen nimmt die Angst vor dem Unbekannten.","6":"Prompt-Kompetenz erzeugt fruehe Erfolgserlebnisse.","7":"Experimentierkultur macht KI zum spannenden Thema statt zur Bedrohung.","8":"Gemeinsamer Austausch staerkt das Team und beschleunigt das Lernen.","9":"Relevante Use Cases zeigen dem Team den konkreten Nutzen.","12":"Qualitaetssicherung gibt dem Team Vertrauen in KI-Outputs."},"impactStatements":{"2":{"low":"Das Team sieht KI als Chefprojekt — nicht als eigene Chance.","high":"Die Fuehrung lebt KI-Nutzung vor und inspiriert."},"3":{"low":"Aengste und Widerstaende blockieren die KI-Adoption.","high":"Strukturiertes Change Management schafft Akzeptanz."},"5":{"low":"Das Team fuerchtet KI, weil es sie nicht versteht.","high":"Jeder im Team versteht, wie KI helfen kann."},"6":{"low":"Erste Versuche scheitern — Frust statt Begeisterung.","high":"Fruehe Erfolgserlebnisse erzeugen Motivation."},"7":{"low":"Niemand traut sich, KI auszuprobieren.","high":"Das Team experimentiert begeistert mit neuen KI-Moeglichkeiten."},"8":{"low":"Wissen bleibt bei Einzelnen — das Team profitiert nicht.","high":"Aktiver Austausch beschleunigt das Lernen fuer alle."}},"actionPlan":{"month1":"Befaehigen: KI-Workshop fuer alle + Fuehrungskraefte-Demo + Bedenken adressieren","month2":"Aktivieren: Prompt-Training + KI-Champions benennen + Slack-Kanal starten","month3":"Verankern: Community of Practice + Show-and-Tell + Experimentierzeit etablieren"},"cta":{"title":"KI-Transformation gelingt nur MIT dem Team","text":"Die AI Performance Academy begleitet dein Team von der Skepsis zur Begeisterung.","btn":"Team fuer KI begeistern"}},{"id":"risiken","name":"Risiken minimieren","color":"#EF4444","icon":"🛡️","question":"Wie setzen wir KI sicher ein?","desc":"KI-Risiken erkennen, steuern und DSGVO-konform arbeiten","primary":[4,12,13,14,15,16],"secondary":[1,2,3,10],"context":{"1":"Eine KI-Strategie definiert auch, wo KI NICHT eingesetzt werden soll.","2":"Fuehrungskraefte muessen Governance vorleben.","3":"Change Management adressiert auch Sicherheitsbedenken.","4":"Governance-Regeln sind das Fundament fuer sicheren KI-Einsatz.","10":"Sichere Tool-Auswahl ist der erste Schutz.","12":"Qualitaetssicherung verhindert fehlerhafte KI-Outputs.","13":"Datenqualitaet bestimmt die Qualitaet der KI-Ergebnisse.","14":"DSGVO-Compliance ist keine Option, sondern Pflicht.","15":"Sichere Infrastruktur schuetzt vor Datenlecks.","16":"Firmenwissen muss geschuetzt in die KI einfliessen."},"impactStatements":{"4":{"low":"Ohne Governance-Regeln ist KI-Einsatz ein Risiko.","high":"Klare Governance gibt Sicherheit fuer alle."},"12":{"low":"Unkontrollierte KI-Outputs koennen teuer werden.","high":"Quality Gates schuetzen vor fehlerhaften Ergebnissen."},"13":{"low":"Schlechte Daten fuehren zu schlechten KI-Entscheidungen.","high":"Hohe Datenqualitaet sichert zuverlaessige KI-Ergebnisse."},"14":{"low":"DSGVO-Verstoesse drohen mit hohen Bussgeldern.","high":"Datenschutz ist bei jeder KI-Anwendung sichergestellt."},"15":{"low":"Unsichere Infrastruktur ist ein Einfallstor fuer Datenlecks.","high":"Die IT-Infrastruktur ist auf KI-Sicherheit ausgelegt."},"16":{"low":"Vertrauliches Wissen landet in externen KI-Tools.","high":"Firmenwissen fliesst geschuetzt in KI-Anwendungen ein."}},"actionPlan":{"month1":"Grundschutz: KI-Richtlinien erstellen + Datenschutz-Briefing + Tool-Audit","month2":"Absichern: Review-Prozesse definieren + DSGVO-Checkliste + Infrastruktur pruefen","month3":"Automatisieren: Compliance-Checks + Quality Gates + Monitoring etablieren"},"cta":{"title":"KI ohne Governance ist ein Unternehmensrisiko","text":"Die AI Performance Academy zeigt dir, wie du KI sicher und DSGVO-konform einsetzt.","btn":"KI sicher einsetzen"}},{"id":"roi","name":"ROI nachweisen","color":"#F59E0B","icon":"💰","question":"Wie beweisen wir den KI-Nutzen?","desc":"KI-Erfolg messbar machen und Investitionen rechtfertigen","primary":[1,9,11,17,18,20],"secondary":[2,5,7,15,19],"context":{"1":"Die KI-Vision definiert, welchen Erfolg wir anstreben.","2":"Fuehrungskraefte brauchen Zahlen fuer weitere Investitionen.","5":"Ein kompetentes Team erzielt messbar bessere Ergebnisse.","7":"Experimente liefern die Daten fuer ROI-Berechnungen.","9":"Use-Case-Priorisierung nach ROI-Potenzial ist der Schluessel.","11":"Automatisierung liefert die messbarsten Zeitersparnisse.","15":"Skalierbare Infrastruktur ermoeglicht ROI-Steigerung.","17":"KPIs und Dashboards machen den Erfolg sichtbar.","18":"Produktivitaetsgewinne sind der greifbarste ROI.","19":"Innovation eroeffnet neue Umsatzquellen.","20":"Skalierung multipliziert den ROI."},"impactStatements":{"1":{"low":"Ohne Ziele kannst du keinen Erfolg messen.","high":"Klare Ziele machen KI-Erfolg messbar."},"9":{"low":"Du investierst in KI ohne zu wissen, wo der Hebel liegt.","high":"Jeder KI-Einsatz ist auf maximalen ROI ausgerichtet."},"11":{"low":"Automatisierungspotenzial bleibt ungenutzt.","high":"Automatisierung liefert sofort messbare Zeitersparnis."},"17":{"low":"Du kannst den Wert von KI nicht belegen.","high":"Dein KI-ROI-Dashboard ueberzeugt jeden Stakeholder."},"18":{"low":"Produktivitaetsgewinne sind gefuehlt — nicht belegt.","high":"Nachweisbare Produktivitaetssteigerung rechtfertigt jede Investition."},"20":{"low":"KI-Erfolge bleiben Inselloesungen.","high":"Skalierung multipliziert den ROI auf die gesamte Organisation."}},"actionPlan":{"month1":"Baseline: Aktuelle Kosten und Zeiten dokumentieren + KPIs definieren","month2":"Messen: Erste KI-Projekte mit Vorher-Nachher-Vergleich + Dashboard aufbauen","month3":"Berichten: ROI-Report fuer Fuehrung + Skalierungsplan fuer Top-Performer"},"cta":{"title":"KI-Budget ohne ROI-Nachweis ist in Gefahr","text":"Die AI Performance Academy zeigt dir, wie du den KI-Nutzen beweisbar machst.","btn":"KI-ROI nachweisen"}},{"id":"entscheidungen","name":"Bessere Entscheidungen","color":"#14B8A6","icon":"🎯","question":"Wie treffen wir mit KI bessere Entscheidungen?","desc":"KI fuer datenbasierte Entscheidungen und strategische Planung nutzen","primary":[1,9,13,16,17],"secondary":[4,10,14,15],"context":{"1":"Eine KI-Strategie definiert, wo KI Entscheidungen unterstuetzen soll.","4":"Governance stellt sicher, dass KI-gestuetzte Entscheidungen verlaesslich sind.","9":"Use-Case-Analyse deckt Entscheidungsengpaesse auf.","10":"Die richtigen Analyse-Tools liefern die richtigen Insights.","13":"Datenqualitaet bestimmt die Qualitaet der KI-Empfehlungen.","14":"Datenschutz muss auch bei Entscheidungsunterstuetzung beachtet werden.","15":"Infrastruktur ermoeglicht Echtzeit-Analysen.","16":"Firmenwissen als Kontext verbessert KI-Empfehlungen enorm.","17":"ROI-Messung zeigt, ob KI-gestuetzte Entscheidungen besser sind."},"impactStatements":{"1":{"low":"KI wird nicht strategisch fuer Entscheidungen eingesetzt.","high":"KI ist ein fester Bestandteil eurer Entscheidungsprozesse."},"9":{"low":"Entscheidungen basieren auf Bauchgefuehl statt auf Daten.","high":"Systematische Analyse liefert datenbasierte Entscheidungsgrundlagen."},"13":{"low":"Schlechte Daten fuehren zu schlechten Entscheidungen.","high":"Hochwertige Daten sichern zuverlaessige KI-Empfehlungen."},"16":{"low":"KI kennt euren Kontext nicht — generische Empfehlungen helfen wenig.","high":"KI nutzt euer Firmenwissen fuer kontextreiche Entscheidungshilfe."},"17":{"low":"Du weisst nicht, ob KI-Empfehlungen besser sind als Bauchgefuehl.","high":"Messbare Verbesserungen beweisen den Wert von KI-gestuetzten Entscheidungen."}},"actionPlan":{"month1":"Analyse: Entscheidungsprozesse dokumentieren + Datenquellen identifizieren","month2":"Pilotieren: KI-gestuetzte Entscheidung in einem Bereich testen + Vergleich mit Bauchgefuehl","month3":"Integrieren: KI-Dashboards fuer Fuehrung + Knowledge Base anbinden + Ergebnisse messen"},"cta":{"title":"Bessere Daten, bessere Entscheidungen","text":"Die AI Performance Academy zeigt dir, wie KI deine Entscheidungsprozesse verbessert.","btn":"Datenbasiert entscheiden"}}],"export":{"defaultCtas":{"vision":{"title":"Deine KI-Vision braucht Schaerfung","text":"Ohne klare Strategie verschwendest du Ressourcen. Ein KI-Strategie-Workshop kann in 2 Stunden Klarheit schaffen."},"kompetenz":{"title":"Dein Team braucht KI-Kompetenz","text":"Mit gezielter Schulung wird KI vom Mysterium zum taeglichen Werkzeug — und Begeisterung ersetzt Angst."},"prozesse":{"title":"Deine Prozesse brauchen KI-Integration","text":"Von der Workflow-Analyse bis zur Automatisierung — KI-Agenten koennen repetitive Arbeit uebernehmen."},"daten":{"title":"Deine Daten brauchen Struktur","text":"Ohne Datenqualitaet und sichere Infrastruktur bleibt KI ein Blindflug. Die Grundlagen muessen stimmen."},"impact":{"title":"Dein KI-Impact braucht Messbarkeit","text":"ROI-Dashboards und Produktivitaetsmessung machen den KI-Nutzen sichtbar — fuer dich und deine Stakeholder."}}}};
+</script>
+<script>
+/**
+ * Assessment Engine v5.0.0
+ * Reusable assessment engine - data-driven from CONFIG object
+ *
+ * Expects: const CONFIG = { meta, theme, labels, scoring, tiers, levels, components, needs, export } to be defined before this script
+ * Expects: Chart.js to be loaded (CDN)
+ */
+(function(CONFIG) {
+  'use strict';
+
+  // Derived constants
+  const COMPONENT_COUNT = CONFIG.components.length;
+  const THESES_COUNT = CONFIG.components[0].theses.length;
+  const STORAGE_PREFIX = 'assess-' + CONFIG.meta.id;
+
+  // === STATE ===
+  let scores = new Array(COMPONENT_COUNT).fill(1);
+  let checkStates = Array.from({length: COMPONENT_COUNT}, () => new Array(THESES_COUNT).fill(false));
+  let touched = new Array(COMPONENT_COUNT).fill(false);
+  let activeNeed = null;
+  let miniRadarChart = null, resultsRadarChart = null;
+
+  function loadState() {
+    const p = new URLSearchParams(window.location.search);
+    const needParam = p.get('need');
+    if (needParam && CONFIG.needs.find(n => n.id === needParam)) {
+      activeNeed = needParam;
+    }
+    const s = p.get('s');
+    if (s) {
+      const d = s.replace(/-/g,'');
+      if (d.length === COMPONENT_COUNT) {
+        scores = d.split('').map(x => Math.max(1, Math.min(5, parseInt(x)||1)));
+        scores.forEach((sc, i) => { for(let t=0;t<THESES_COUNT;t++) checkStates[i][t] = t < (sc===1?0:sc); });
+        touched = new Array(COMPONENT_COUNT).fill(true);
+        showScreen('results');
+        return;
+      }
+    }
+    const sv = localStorage.getItem(STORAGE_PREFIX + '-scores');
+    if (sv) try { const q = JSON.parse(sv); if (Array.isArray(q)&&q.length===COMPONENT_COUNT) scores = q; } catch(e){}
+    const cs = localStorage.getItem(STORAGE_PREFIX + '-checks');
+    if (cs) try { const q = JSON.parse(cs); if (Array.isArray(q)&&q.length===COMPONENT_COUNT) checkStates = q; } catch(e){}
+    const tv = localStorage.getItem(STORAGE_PREFIX + '-touched');
+    if (tv) try { const q = JSON.parse(tv); if (Array.isArray(q)&&q.length===COMPONENT_COUNT) touched = q; } catch(e){}
+    const savedNeed = localStorage.getItem(STORAGE_PREFIX + '-need');
+    if (!activeNeed && savedNeed) activeNeed = savedNeed;
+  }
+
+  function saveState() {
+    localStorage.setItem(STORAGE_PREFIX + '-scores', JSON.stringify(scores));
+    localStorage.setItem(STORAGE_PREFIX + '-checks', JSON.stringify(checkStates));
+    localStorage.setItem(STORAGE_PREFIX + '-touched', JSON.stringify(touched));
+    localStorage.setItem(STORAGE_PREFIX + '-need', activeNeed || '');
+    const h = JSON.parse(localStorage.getItem(STORAGE_PREFIX + '-history')||'[]');
+    const today = new Date().toISOString().split('T')[0];
+    const idx = h.findIndex(x => x.date===today);
+    if (idx>=0) h[idx].scores=[...scores]; else h.push({date:today,scores:[...scores]});
+    if (h.length>30) h.shift();
+    localStorage.setItem(STORAGE_PREFIX + '-history', JSON.stringify(h));
+  }
+
+  // === NEED FUNCTIONS ===
+  function renderNeedLanding() {
+    const grid = document.getElementById('needsGrid');
+    grid.innerHTML = CONFIG.needs.map(n => `
+      <div class="need-card" onclick="selectNeed('${n.id}')" style="--need-color:${n.color}; border-color:${n.color}20">
+        <span class="need-icon">${n.icon}</span>
+        <div class="need-name">${n.name}</div>
+        <div class="need-divider" style="background:${n.color}"></div>
+        <div class="need-question">${n.question}</div>
+      </div>
+    `).join('');
+  }
+
+  function selectNeed(needId) {
+    activeNeed = needId;
+    localStorage.setItem(STORAGE_PREFIX + '-need', needId);
+    showScreen('assessment');
+  }
+
+  function startKomplettCheck() {
+    activeNeed = null;
+    localStorage.setItem(STORAGE_PREFIX + '-need', '');
+    document.getElementById('landingPyramidSection').classList.add('visible');
+    document.getElementById('landingNeedsSection').classList.add('hidden');
+  }
+
+  function showNeedsLanding() {
+    document.getElementById('landingPyramidSection').classList.remove('visible');
+    document.getElementById('landingNeedsSection').classList.remove('hidden');
+  }
+
+  function applyNeedContext() {
+    const banner = document.getElementById('needHeaderBanner');
+    document.querySelectorAll('.need-context-badge').forEach(b => b.remove());
+    document.querySelectorAll('.slider-item').forEach(s => s.classList.remove('need-dimmed', 'need-primary', 'need-secondary'));
+
+    if (!activeNeed) {
+      banner.style.display = 'none';
+      return;
+    }
+    const need = CONFIG.needs.find(n => n.id === activeNeed);
+    banner.style.display = 'flex';
+    banner.style.background = `color-mix(in srgb, ${need.color} 10%, var(--bg-card))`;
+    banner.style.border = `1px solid color-mix(in srgb, ${need.color} 30%, var(--gray-dark))`;
+    banner.innerHTML = `<div class="need-header-icon">${need.icon}</div><div><h3 style="color:${need.color}">Assessment fuer: ${need.name}</h3><p style="color:var(--gray-light)">${need.desc}</p></div>`;
+
+    const allItems = document.querySelectorAll('.slider-item');
+    let agentIdx = 0;
+    CONFIG.tiers.forEach(tier => {
+      CONFIG.components.filter(a => a.tier === tier.id).forEach(agent => {
+        const item = allItems[agentIdx];
+        if (item) {
+          const isPrimary = need.primary.includes(agent.id);
+          const isSecondary = need.secondary.includes(agent.id);
+          if (isPrimary) {
+            item.classList.add('need-primary');
+            if (need.context[agent.id]) {
+              const badge = document.createElement('div');
+              badge.className = 'need-context-badge primary';
+              badge.style.borderLeftColor = need.color;
+              badge.style.background = `color-mix(in srgb, ${need.color} 8%, transparent)`;
+              badge.style.color = need.color;
+              badge.innerHTML = `<strong>Wichtig fuer ${need.name}:</strong> ${need.context[agent.id]}`;
+              item.insertBefore(badge, item.firstChild);
+            }
+          } else if (isSecondary) {
+            item.classList.add('need-secondary');
+            if (need.context[agent.id]) {
+              const badge = document.createElement('div');
+              badge.className = 'need-context-badge secondary';
+              badge.innerHTML = `Unterstuetzt dein Ziel: ${need.context[agent.id]}`;
+              item.insertBefore(badge, item.firstChild);
+            }
+          } else {
+            item.classList.add('need-dimmed');
+          }
+        }
+        agentIdx++;
+      });
+    });
+  }
+
+  function getNeedScore(needId) {
+    const need = CONFIG.needs.find(n => n.id === needId);
+    if (!need) return 0;
+    let totalWeight = 0, weightedSum = 0;
+    need.primary.forEach(id => { weightedSum += scores[id-1] * CONFIG.scoring.needPrimaryMultiplier; totalWeight += CONFIG.scoring.needPrimaryMultiplier; });
+    need.secondary.forEach(id => { weightedSum += scores[id-1] * CONFIG.scoring.needSecondaryMultiplier; totalWeight += CONFIG.scoring.needSecondaryMultiplier; });
+    return totalWeight > 0 ? (weightedSum / totalWeight / 5) * 100 : 0;
+  }
+
+  function calcNeedPriority(agent, needId) {
+    const basePriority = calcPriority(agent);
+    if (!needId) return basePriority;
+    const need = CONFIG.needs.find(n => n.id === needId);
+    if (!need) return basePriority;
+    if (need.primary.includes(agent.id)) return basePriority * CONFIG.scoring.needPrimaryMultiplier;
+    if (need.secondary.includes(agent.id)) return basePriority * CONFIG.scoring.needSecondaryMultiplier;
+    return basePriority * CONFIG.scoring.needIrrelevantMultiplier;
+  }
+
+  function renderNeedResults() {
+    if (!activeNeed) return;
+    const need = CONFIG.needs.find(n => n.id === activeNeed);
+    const sc = getNeedScore(activeNeed);
+    const col = sc >= 70 ? 'var(--score-high)' : sc >= 40 ? 'var(--score-mid)' : 'var(--score-low)';
+
+    const weaknesses = need.primary
+      .map(id => ({id, score: scores[id-1], agent: CONFIG.components[id-1]}))
+      .filter(a => a.score <= 2)
+      .sort((a,b) => a.score - b.score)
+      .slice(0, 3);
+
+    const strengths = need.primary
+      .map(id => ({id, score: scores[id-1], agent: CONFIG.components[id-1]}))
+      .filter(a => a.score >= 4)
+      .sort((a,b) => b.score - a.score)
+      .slice(0, 3);
+
+    const allRelevant = [...need.primary, ...need.secondary];
+    const blockades = CONFIG.components
+      .filter(a => !allRelevant.includes(a.id) && scores[a.id-1] <= 2)
+      .filter(a => a.related.some(r => need.primary.includes(r)))
+      .slice(0, 3);
+
+    const needScoreLabels = CONFIG.labels.needScoreLabels;
+    let html = `<div class="need-score-section">
+      <div class="need-score-circle" style="border-color:${need.color}">
+        <div class="need-score-num" style="color:${need.color}">${sc >= 40 && sc < 80 ? sc.toFixed(1) : Math.round(sc)}</div>
+        <div style="font-size:0.8rem;color:var(--gray-light)">%</div>
+      </div>
+      <div style="font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:4px">${need.name}-Readiness</div>
+      <div style="font-size:0.85rem;color:var(--gray-light)">${sc >= 70 ? needScoreLabels.good : sc >= 40 ? needScoreLabels.medium : needScoreLabels.critical}</div>
+    </div>`;
+
+    if (weaknesses.length > 0) {
+      html += `<div class="impact-section"><h3 style="color:var(--score-low)">\u26A0 Top-Schwachstellen</h3>`;
+      weaknesses.forEach(w => {
+        const impact = need.impactStatements[w.id];
+        html += `<div class="impact-card weakness"><h4>${w.agent.name} (Score: ${w.score}/5)</h4><p>${impact ? impact.low : w.agent.recommendations[w.score-1]}</p></div>`;
+      });
+      html += `</div>`;
+    }
+
+    if (strengths.length > 0) {
+      html += `<div class="impact-section"><h3 style="color:var(--score-high)">\u2713 Dein Fundament</h3>`;
+      strengths.forEach(s => {
+        const impact = need.impactStatements[s.id];
+        html += `<div class="impact-card strength"><h4>${s.agent.name} (Score: ${s.score}/5)</h4><p>${impact ? impact.high : 'Gut aufgestellt \u2014 weiter so!'}</p></div>`;
+      });
+      html += `</div>`;
+    }
+
+    if (blockades.length > 0) {
+      html += `<div class="impact-section"><h3 style="color:var(--score-mid)">\uD83D\uDD17 Systemblockaden</h3><p style="font-size:0.82rem;color:var(--gray-light);margin-bottom:12px">Diese Bausteine sind nicht direkt Teil deines Ziels, aber sie blockieren den Erfolg:</p>`;
+      blockades.forEach(b => {
+        const affected = b.related.filter(r => need.primary.includes(r)).map(r => CONFIG.components[r-1].name);
+        html += `<div class="impact-card blockade"><h4>${b.name} (Score: ${scores[b.id-1]}/5)</h4><p>Blockiert: ${affected.join(', ')}</p></div>`;
+      });
+      html += `</div>`;
+    }
+
+    document.getElementById('needGoalContent').innerHTML = html;
+  }
+
+  function render90DayPlan() {
+    if (!activeNeed) return;
+    const need = CONFIG.needs.find(n => n.id === activeNeed);
+
+    const allAgents = [...need.primary.map(id => ({id, weight: CONFIG.scoring.needPrimaryMultiplier})), ...need.secondary.map(id => ({id, weight: CONFIG.scoring.needSecondaryMultiplier}))];
+    const sorted = allAgents
+      .map(a => ({...a, score: scores[a.id-1], agent: CONFIG.components[a.id-1]}))
+      .sort((a,b) => (a.score - b.score) || (b.weight - a.weight));
+
+    const month1 = sorted.filter(a => a.score <= 2).slice(0, 4);
+    const month2 = sorted.filter(a => a.score === 3).slice(0, 4);
+    const month3 = sorted.filter(a => a.score >= 4).slice(0, 4);
+    if (month1.length === 0) month1.push(...sorted.slice(0, 2));
+    if (month2.length === 0) month2.push(...sorted.filter(a => !month1.includes(a)).slice(0, 2));
+
+    const months = [
+      {num: 1, title: need.actionPlan.month1, items: month1, color: 'var(--score-low)'},
+      {num: 2, title: need.actionPlan.month2, items: month2, color: 'var(--score-mid)'},
+      {num: 3, title: need.actionPlan.month3, items: month3, color: 'var(--score-high)'}
+    ];
+
+    let html = `<p style="color:var(--gray-light);font-size:0.9rem;margin-bottom:24px">Dein personalisierter Aktionsplan basierend auf deinen Scores \u2014 priorisiert fuer <strong style="color:${need.color}">${need.name}</strong>.</p>`;
+
+    months.forEach(m => {
+      html += `<div class="plan-month"><div class="plan-month-header"><div class="plan-month-num" style="background:${m.color}">M${m.num}</div><div><div class="plan-month-title">Monat ${m.num}</div><div class="plan-month-desc">${m.title}</div></div></div>`;
+      if (m.items.length === 0) {
+        html += `<div style="padding:10px 0;font-size:0.85rem;color:var(--gray-light)">Keine dringenden Massnahmen \u2014 fokussiere dich auf die anderen Monate.</div>`;
+      }
+      m.items.forEach(a => {
+        const scCol = a.score <= 2 ? 'var(--score-low)' : a.score === 3 ? 'var(--score-mid)' : 'var(--score-high)';
+        html += `<div class="plan-action"><div class="plan-action-score" style="background:${scCol}">${a.score}</div><div class="plan-action-info"><div class="plan-action-name">${a.agent.name}</div><div class="plan-action-tip">${a.agent.recommendations[a.score-1]}</div><div class="plan-action-agent">KI-Agent: ${a.agent.aiAgent.substring(0, 100)}...</div></div></div>`;
+      });
+      html += `</div>`;
+    });
+
+    document.getElementById('planContent').innerHTML = html;
+  }
+
+  // === NAVIGATION ===
+  function showScreen(id) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('screen-'+id).classList.add('active');
+    window.scrollTo({top:0, behavior:'smooth'});
+    if (id==='assessment') applyNeedContext();
+    if (id==='results') renderResults();
+    if (id==='export') renderExport();
+  }
+
+  function jumpToTier(tierIndex) {
+    showScreen('assessment');
+    document.querySelectorAll('.tier-tab').forEach((t,i) => t.classList.toggle('active', i===tierIndex));
+    document.querySelectorAll('.slider-group').forEach((g,i) => g.classList.toggle('active', i===tierIndex));
+  }
+
+  function jumpToAgent(agentId) {
+    const agent = CONFIG.components[agentId-1];
+    const tierIdx = CONFIG.tiers.findIndex(t => t.id === agent.tier);
+    showScreen('assessment');
+    document.querySelectorAll('.tier-tab').forEach((t,i) => t.classList.toggle('active', i===tierIdx));
+    document.querySelectorAll('.slider-group').forEach((g,i) => g.classList.toggle('active', i===tierIdx));
+    setTimeout(() => {
+      const items = document.querySelectorAll('.slider-group.active .slider-item');
+      const localIdx = CONFIG.components.filter(a => a.tier === agent.tier).findIndex(a => a.id === agentId);
+      if (items[localIdx]) items[localIdx].scrollIntoView({behavior:'smooth', block:'center'});
+    }, 100);
+  }
+
+  // === ASSESSMENT ===
+  function initAssessment() {
+    const tabsEl = document.getElementById('tierTabs');
+    const groupsEl = document.getElementById('sliderGroups');
+    CONFIG.tiers.forEach((tier, ti) => {
+      const tiersComponentCount = CONFIG.components.filter(a => a.tier === tier.id).length;
+      const tab = document.createElement('button');
+      tab.className = 'tier-tab'+(ti===0?' active':'');
+      tab.innerHTML = `${tier.name} <span class="tier-tab-badge" id="tier-badge-${ti}">0/${tiersComponentCount}</span>`;
+      tab.style.setProperty('--active-tier-color', tier.color);
+      tab.onclick = () => { document.querySelectorAll('.tier-tab').forEach((t,i)=>t.classList.toggle('active',i===ti)); document.querySelectorAll('.slider-group').forEach((g,i)=>g.classList.toggle('active',i===ti)); };
+      tabsEl.appendChild(tab);
+
+      const group = document.createElement('div');
+      group.className = 'slider-group'+(ti===0?' active':'');
+      CONFIG.components.filter(a=>a.tier===tier.id).forEach(agent => {
+        const idx = agent.id-1;
+        const item = document.createElement('div');
+        item.className = 'slider-item';
+        const lvlTags = ['','Basic','Definiert','Managed','Optimized'];
+        const lvlColors = ['','#F97316','#F59E0B','#22C55E','#3B82F6'];
+        const thesenHtml = agent.theses.map((t,ti) => {
+          const chk = checkStates[idx][ti];
+          return `<div class="these-item ${chk?'checked':''}" role="checkbox" aria-checked="${chk}" tabindex="0" onclick="toggleThese(${agent.id},${ti},this)" onkeydown="if(event.key===' '||event.key==='Enter'){event.preventDefault();toggleThese(${agent.id},${ti},this);}">
+            <div class="these-cb ${chk?'checked':''}" aria-hidden="true"></div>
+            <div class="these-text">${t}</div>
+            ${ti>0?`<span class="these-level-tag" style="background:${lvlColors[ti]}">${lvlTags[ti]}</span>`:''}
+          </div>`;
+        }).join('');
+        const sc = scores[idx];
+        const emp = agent.recommendations[sc-1];
+        const empClass = sc>=4?'good':'action';
+        item.innerHTML = `
+          <div class="slider-label">
+            <span class="slider-name">${agent.id}. ${agent.name}</span>
+            <span class="slider-score" id="score-${agent.id}" style="color:${tier.color}">${sc}</span>
+          </div>
+          <div class="slider-desc">${agent.desc}</div>
+          <div class="slider-track"><div class="slider-fill" id="fill-${agent.id}" style="background:${tier.color};width:${(sc-1)/4*100}%"></div><input type="range" min="1" max="5" value="${sc}" style="--slider-color:${tier.color}" oninput="updateSlider(${agent.id},this.value)" aria-label="${agent.name}"></div>
+          <div class="slider-levels">${agent.levels.map((l,i)=>`<span title="${l}">${i+1}</span>`).join('')}</div>
+          <div class="thesen-list"><div class="thesen-header">${CONFIG.labels.thesesHeader}</div>${thesenHtml}</div>
+          <div class="empfehlung-box ${empClass}" id="emp-${agent.id}"><div class="empfehlung-label ${empClass}">${sc>=4?'Weiter so':'Naechster Schritt'}</div>${emp}</div>
+          <div class="ki-agent-hint"><strong>KI-Agent-Tipp:</strong> ${agent.aiAgent}</div>
+        `;
+        group.appendChild(item);
+      });
+      groupsEl.appendChild(group);
+    });
+    initMiniRadar(); updateProgress(); updateTierAverages(); updateTierBadges();
+  }
+
+  function toggleThese(agentId, theseIdx, el) {
+    const idx = agentId-1;
+    touched[idx] = true;
+    checkStates[idx][theseIdx] = !checkStates[idx][theseIdx];
+    const cb = el.querySelector('.these-cb');
+    cb.classList.toggle('checked');
+    el.classList.toggle('checked');
+    el.setAttribute('aria-checked', checkStates[idx][theseIdx]);
+    const checked = checkStates[idx].filter(Boolean).length;
+    const newScore = CONFIG.scoring.checkToScoreMap[checked];
+    scores[idx] = newScore;
+    syncSliderUI(agentId);
+    updateAll();
+  }
+
+  function updateSlider(agentId, value) {
+    const idx = agentId-1;
+    touched[idx] = true;
+    scores[idx] = parseInt(value);
+    syncSliderUI(agentId);
+    updateAll();
+  }
+
+  function syncSliderUI(agentId) {
+    const idx = agentId-1;
+    const v = scores[idx];
+    const agent = CONFIG.components[idx];
+    const tier = CONFIG.tiers.find(t=>t.id===agent.tier);
+    document.getElementById('score-'+agentId).textContent = v;
+    document.getElementById('fill-'+agentId).style.width = ((v-1)/4*100)+'%';
+    const slider = document.querySelector(`#fill-${agentId}`).parentElement.querySelector('input');
+    if (slider) slider.value = v;
+    const empEl = document.getElementById('emp-'+agentId);
+    if (empEl) {
+      const cls = v>=4?'good':'action';
+      empEl.className = 'empfehlung-box '+cls;
+      empEl.innerHTML = `<div class="empfehlung-label ${cls}">${v>=4?'Weiter so':'Naechster Schritt'}</div>${agent.recommendations[v-1]}`;
+    }
+  }
+
+  function updateAll() {
+    updateMiniRadar(); updateTierAverages(); updateProgress(); saveState();
+  }
+
+  function updateTierBadges() {
+    CONFIG.tiers.forEach((t, ti) => {
+      const agents = CONFIG.components.filter(a => a.tier === t.id);
+      const tiersComponentCount = agents.length;
+      const count = agents.filter(a => touched[a.id-1]).length;
+      const badge = document.getElementById('tier-badge-'+ti);
+      if (badge) {
+        badge.textContent = count >= tiersComponentCount ? '\u2713' : count+'/'+tiersComponentCount;
+        badge.classList.toggle('complete', count >= tiersComponentCount);
+      }
+    });
+  }
+
+  function updateProgress() {
+    const count = touched.filter(Boolean).length;
+    document.getElementById('assessmentProgress').style.width = (count/COMPONENT_COUNT*100)+'%';
+    document.getElementById('assessmentProgressLabel').textContent = count+' / '+COMPONENT_COUNT+' bewertet';
+    updateTierBadges();
+    if (count === COMPONENT_COUNT) {
+      const banner = document.getElementById('celebrationBanner');
+      if (banner && !banner.classList.contains('shown')) {
+        banner.classList.add('show');
+        banner.classList.add('shown');
+        banner.style.cursor = 'pointer';
+        banner.onclick = () => { banner.classList.remove('show'); showScreen('results'); };
+        setTimeout(() => banner.classList.remove('show'), 6000);
+      }
+    }
+  }
+
+  // === CALCULATIONS ===
+  function getTierAvg(tierId) { const a=CONFIG.components.filter(x=>x.tier===tierId); return a.reduce((s,x)=>s+scores[x.id-1],0)/a.length; }
+  function getOverallScore() { let ws=0,tw=0; CONFIG.tiers.forEach(t=>{ws+=getTierAvg(t.id)*t.weight;tw+=t.weight;}); return (ws/tw/5)*100; }
+  function calcPriority(agent) { const gap=5-scores[agent.id-1]; const t=CONFIG.tiers.find(x=>x.id===agent.tier); const dc=CONFIG.components.filter(a=>a.related.includes(agent.id)).length; return gap*t.weight*(1+CONFIG.scoring.dependencyWeight*dc); }
+
+  // === MINI RADAR ===
+  function initMiniRadar() {
+    const primaryColor = CONFIG.theme.primaryColor;
+    const r = parseInt(primaryColor.slice(1,3), 16);
+    const g = parseInt(primaryColor.slice(3,5), 16);
+    const b = parseInt(primaryColor.slice(5,7), 16);
+    const bgColor = `rgba(${r},${g},${b},0.15)`;
+
+    miniRadarChart = new Chart(document.getElementById('miniRadar').getContext('2d'), {
+      type:'radar', data:{ labels:CONFIG.tiers.map(t=>t.name), datasets:[{data:CONFIG.tiers.map(t=>getTierAvg(t.id)),backgroundColor:bgColor,borderColor:primaryColor,borderWidth:2,pointBackgroundColor:primaryColor,pointRadius:4}]},
+      options:{responsive:true,maintainAspectRatio:true,plugins:{legend:{display:false}},scales:{r:{min:0,max:5,ticks:{stepSize:1,display:false},grid:{color:'rgba(255,255,255,0.08)'},pointLabels:{color:'#9DA3AF',font:{family:'Montserrat',size:11,weight:'600'}},angleLines:{color:'rgba(255,255,255,0.08)'}}}}
+    });
+  }
+  function updateMiniRadar() { if(!miniRadarChart)return; miniRadarChart.data.datasets[0].data=CONFIG.tiers.map(t=>getTierAvg(t.id)); miniRadarChart.update('none'); }
+  function updateTierAverages() {
+    document.getElementById('tierAverages').innerHTML = CONFIG.tiers.map(t=>{const a=getTierAvg(t.id); return `<div class="tier-avg-row"><div class="tier-avg-dot" style="background:${t.color}"></div><div class="tier-avg-label">${t.name}</div><div class="tier-avg-val" style="color:${t.color}">${a.toFixed(1)}</div></div>`;}).join('');
+  }
+
+  // === RESULTS ===
+  function showResults() { saveState(); showScreen('results'); }
+
+  function renderResults() {
+    const tabsContainer = document.getElementById('resultsTabs');
+    document.querySelectorAll('.results-tab-dynamic').forEach(t => t.remove());
+
+    if (activeNeed) {
+      const need = CONFIG.needs.find(n => n.id === activeNeed);
+      const goalTab = document.createElement('button');
+      goalTab.className = 'results-tab results-tab-dynamic active';
+      goalTab.dataset.tab = 'needgoal';
+      goalTab.textContent = need.icon + ' ' + need.name;
+      goalTab.onclick = () => showResultTab('needgoal');
+      tabsContainer.insertBefore(goalTab, tabsContainer.firstChild);
+
+      const planTab = document.createElement('button');
+      planTab.className = 'results-tab results-tab-dynamic';
+      planTab.dataset.tab = 'plan';
+      planTab.textContent = '\uD83D\uDCCB 90-Tage-Plan';
+      planTab.onclick = () => showResultTab('plan');
+      goalTab.after(planTab);
+
+      document.getElementById('panel-needgoal').style.display = '';
+      document.getElementById('panel-plan').style.display = '';
+
+      document.querySelectorAll('.results-tab:not(.results-tab-dynamic)').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.results-panel:not(#panel-needgoal):not(#panel-plan)').forEach(p => p.classList.remove('active'));
+      document.getElementById('panel-needgoal').classList.add('active');
+
+      renderNeedResults();
+      render90DayPlan();
+    } else {
+      document.getElementById('panel-needgoal').style.display = 'none';
+      document.getElementById('panel-plan').style.display = 'none';
+      document.querySelector('.results-tab[onclick="showResultTab(\'radar\')"]').classList.add('active');
+      document.getElementById('panel-radar').classList.add('active');
+    }
+
+    renderOverallScore(); renderTierBars(); renderResultsRadar(); renderHeatMap(); renderDependencyFlow(); renderPriorities(); renderAgents();
+  }
+
+  function renderOverallScore() {
+    const sc = getOverallScore();
+    const el = document.getElementById('overallScoreNum');
+    const r = document.getElementById('scoreRing'), c = 2*Math.PI*74;
+    const col = sc>=70 ? 'var(--score-high)' : sc>=40 ? 'var(--score-mid)' : 'var(--score-low)';
+    el.style.color = col;
+    r.setAttribute('stroke-dasharray', c);
+    r.setAttribute('stroke', col);
+    const target = Math.round(sc);
+    const duration = 1200;
+    const start = performance.now();
+    function animate(now) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = Math.round(eased * target);
+      r.setAttribute('stroke-dashoffset', c - (eased * sc / 100) * c);
+      if (progress < 1) requestAnimationFrame(animate);
+    }
+    requestAnimationFrame(animate);
+    const l = document.getElementById('overallScoreLabel');
+    const scoreLabels = CONFIG.labels.scoreLabels;
+    if(sc>=80) l.textContent=scoreLabels.excellent;
+    else if(sc>=60) l.textContent=scoreLabels.good;
+    else if(sc>=40) l.textContent=scoreLabels.expandable;
+    else l.textContent=scoreLabels.critical;
+  }
+
+  function renderTierBars() {
+    document.getElementById('tierBars').innerHTML = CONFIG.tiers.map(t=>{const a=getTierAvg(t.id);return `<div class="tier-bar-item"><div class="tier-bar-label">${t.name}</div><div class="tier-bar-track"><div class="tier-bar-fill" style="height:${a/5*100}%;background:${t.color}"></div></div><div class="tier-bar-val" style="color:${t.color}">${a.toFixed(1)}</div></div>`;}).join('');
+  }
+
+  function renderResultsRadar() {
+    const primaryColor = CONFIG.theme.primaryColor;
+    const r = parseInt(primaryColor.slice(1,3), 16);
+    const g = parseInt(primaryColor.slice(3,5), 16);
+    const b = parseInt(primaryColor.slice(5,7), 16);
+    const bgColor = `rgba(${r},${g},${b},0.2)`;
+    const tierCount = CONFIG.tiers.length;
+    const goalData = new Array(tierCount).fill(5);
+
+    if(resultsRadarChart)resultsRadarChart.destroy();
+    resultsRadarChart = new Chart(document.getElementById('resultsRadar').getContext('2d'), {
+      type:'radar', data:{ labels:CONFIG.tiers.map(t=>t.name), datasets:[
+        {label:'Ist-Zustand',data:CONFIG.tiers.map(t=>getTierAvg(t.id)),backgroundColor:bgColor,borderColor:primaryColor,borderWidth:2,pointBackgroundColor:primaryColor,pointRadius:5},
+        {label:'Ziel',data:goalData,backgroundColor:'rgba(255,255,255,0.03)',borderColor:'rgba(255,255,255,0.2)',borderWidth:1,borderDash:[5,5],pointRadius:0}
+      ]},
+      options:{responsive:true,plugins:{legend:{labels:{color:'#9DA3AF',font:{family:'Montserrat'}}}},scales:{r:{min:0,max:5,ticks:{stepSize:1,color:'#767D8C',backdropColor:'transparent'},grid:{color:'rgba(255,255,255,0.08)'},pointLabels:{color:'#E5E5E5',font:{family:'Montserrat',size:13,weight:'600'}},angleLines:{color:'rgba(255,255,255,0.08)'}}}}
+    });
+  }
+
+  function renderHeatMap() {
+    const sorted=[...CONFIG.components].sort((a,b)=>calcNeedPriority(b, activeNeed)-calcNeedPriority(a, activeNeed));
+    const mx=Math.max(...sorted.map(a=>calcNeedPriority(a, activeNeed)));
+    const need = activeNeed ? CONFIG.needs.find(n => n.id === activeNeed) : null;
+    document.getElementById('heatmapBody').innerHTML = sorted.map(a=>{
+      const s=scores[a.id-1],t=CONFIG.tiers.find(x=>x.id===a.tier),pr=calcNeedPriority(a, activeNeed),pp=mx>0?pr/mx*100:0;
+      const cls=s<=2?'low':s===3?'mid':'high';
+      const needBadge = need ? (need.primary.includes(a.id) ? `<span style="color:${need.color};font-size:0.65rem;margin-left:4px">\u25CF Primaer</span>` : need.secondary.includes(a.id) ? `<span style="color:var(--gray);font-size:0.65rem;margin-left:4px">\u25CB Sekundaer</span>` : '') : '';
+      return `<tr onclick="jumpToAgent(${a.id})" title="Klicke um ${a.name} zu bearbeiten"><td><strong>${a.id}. ${a.name}</strong>${needBadge}</td><td><span class="heatmap-tier-badge" style="background:${t.color}">${t.name}</span></td><td><span class="heatmap-score ${cls}">${s}</span></td><td style="font-size:0.75rem;color:var(--gray-light)">${a.levels[s-1]}</td><td><div class="heatmap-priority-bar"><div class="heatmap-priority-fill" style="width:${pp}%"></div></div></td></tr>`;
+    }).join('');
+  }
+
+  function renderDependencyFlow() {
+    const W=1100, H=700;
+    const tierIds = CONFIG.tiers.map(t => t.id);
+    const tierX={};
+    const spacing = W / (tierIds.length + 1);
+    tierIds.forEach((id, i) => { tierX[id] = Math.round(spacing * (i + 1)); });
+    const pos={};
+    CONFIG.tiers.forEach(t=>{
+      CONFIG.components.filter(a=>a.tier===t.id).forEach((a,i)=>{
+        pos[a.id]={x:tierX[t.id], y:90+i*115};
+      });
+    });
+    let lines='', nodes='';
+    CONFIG.components.forEach(a=>{
+      const p=pos[a.id];
+      a.related.forEach(r=>{
+        if(r>a.id && pos[r]) {
+          lines+=`<line class="dep-line" data-from="${a.id}" data-to="${r}" x1="${p.x}" y1="${p.y}" x2="${pos[r].x}" y2="${pos[r].y}"/>`;
+        }
+      });
+    });
+    CONFIG.components.forEach(a=>{
+      const p=pos[a.id], s=scores[a.id-1], t=CONFIG.tiers.find(x=>x.id===a.tier);
+      const col=s<=2?'#EF4444':s===3?'#F59E0B':'#22C55E';
+      const depCount=CONFIG.components.filter(x=>x.related.includes(a.id)).length;
+      const radius=Math.min(36, 26+depCount*1.8);
+      nodes+=`<g class="dep-node" data-id="${a.id}" onmouseenter="hlDeps(${a.id})" onmouseleave="clrDeps()" onclick="hlDeps(${a.id})">
+        <circle cx="${p.x}" cy="${p.y}" r="${radius}" fill="${col}" opacity="0.9" stroke="${t.color}" stroke-width="3"/>
+        <text x="${p.x}" y="${p.y+5}" text-anchor="middle">${a.id}</text>
+        <text class="dep-name-label" x="${p.x}" y="${p.y+radius+16}" text-anchor="middle">${a.name}</text>
+      </g>`;
+    });
+    const tl=CONFIG.tiers.map(t=>`<text x="${tierX[t.id]}" y="32" text-anchor="middle" fill="${t.color}" font-size="15" font-weight="800" font-family="Montserrat">${t.name}</text>`).join('');
+    const legend=`<g transform="translate(30,${H-40})">
+      <circle cx="10" cy="0" r="9" fill="#EF4444" opacity="0.9"/><text class="dep-legend-text" x="26" y="4">Score 1-2 (Kritisch)</text>
+      <circle cx="180" cy="0" r="9" fill="#F59E0B" opacity="0.9"/><text class="dep-legend-text" x="196" y="4">Score 3 (Ausbaufaehig)</text>
+      <circle cx="380" cy="0" r="9" fill="#22C55E" opacity="0.9"/><text class="dep-legend-text" x="396" y="4">Score 4-5 (Gut)</text>
+      <text class="dep-legend-hint" x="580" y="4">Groessere Kreise = mehr abhaengige Bausteine | Hover fuer Details</text>
+    </g>`;
+    document.getElementById('depFlow').innerHTML=`<svg viewBox="0 0 ${W} ${H}">${tl}${lines}${nodes}${legend}</svg>`;
+  }
+  function hlDeps(id){const a=CONFIG.components[id-1],tt=document.getElementById('tooltip');document.querySelectorAll('.dep-line').forEach(l=>{const f=+l.dataset.from,t=+l.dataset.to;if(f===id||t===id)l.classList.add('highlight');else l.style.opacity='0.15';});document.querySelectorAll('.dep-node').forEach(n=>{const nid=+n.dataset.id;if(nid!==id&&!a.related.includes(nid)&&!CONFIG.components[nid-1].related.includes(id))n.style.opacity='0.2';});const rn=a.related.map(r=>CONFIG.components[r-1].name).join(', '),dep=CONFIG.components.filter(x=>x.related.includes(id)).map(x=>x.name);tt.innerHTML=`<strong>${a.name}</strong> (Score: ${scores[id-1]})<br><span style="color:var(--gray-light)">Verbunden: ${rn}</span>${dep.length?'<br><span style="color:var(--primary-light)">Beeinflusst: '+dep.join(', ')+'</span>':''}`;tt.classList.add('visible');document.addEventListener('mousemove',mvTT);}
+  function mvTT(e){const t=document.getElementById('tooltip');t.style.left=(e.clientX+16)+'px';t.style.top=(e.clientY-10)+'px';}
+  function clrDeps(){document.querySelectorAll('.dep-line').forEach(l=>{l.classList.remove('highlight');l.style.opacity='';});document.querySelectorAll('.dep-node').forEach(n=>n.style.opacity='');document.getElementById('tooltip').classList.remove('visible');document.removeEventListener('mousemove',mvTT);}
+
+  function renderPriorities() {
+    const top5=[...CONFIG.components].map(a=>({...a,priority:calcNeedPriority(a, activeNeed),score:scores[a.id-1]})).sort((a,b)=>b.priority-a.priority).slice(0,5);
+    document.getElementById('prioritiesList').innerHTML = top5.map((a,i)=>{
+      const t=CONFIG.tiers.find(x=>x.id===a.tier),dep=CONFIG.components.filter(x=>x.related.includes(a.id)),imp=(a.priority*20).toFixed(0);
+      return `<div class="priority-card"><div class="priority-head"><div class="priority-rank">#${i+1}</div><div class="priority-info"><h4>${a.name} <span class="heatmap-tier-badge" style="background:${t.color};font-size:0.65rem;vertical-align:middle;margin-left:6px">${t.name}</span></h4><p>Level ${a.score} (${a.levels[a.score-1]}) \u00B7 ${dep.length} abhaengige Bausteine</p></div><div class="priority-impact"><div class="val">${imp}</div><div class="lbl">Impact</div></div></div><div class="priority-tip"><strong>Naechster Schritt:</strong> ${a.recommendations[a.score-1]}</div><div class="priority-agent"><strong>KI-Agent-Idee:</strong> ${a.aiAgent}</div></div>`;
+    }).join('');
+  }
+
+  function renderAgents() {
+    const sorted=[...CONFIG.components].map(a=>({...a,score:scores[a.id-1]})).filter(a=>a.score<=3).sort((a,b)=>calcNeedPriority(b, activeNeed)-calcNeedPriority(a, activeNeed)).slice(0,8);
+    const el=document.getElementById('agentsList');
+    if(sorted.length===0){el.innerHTML='<div style="text-align:center;padding:40px;color:var(--gray-light)"><h3 style="color:var(--white);margin-bottom:8px">Glueckwunsch!</h3><p>Alle Bausteine sind auf Level 4+. Du brauchst keine dringenden KI-Agenten - aber KI kann auch bei Optimierung helfen.</p></div>';return;}
+    el.innerHTML = `<p style="color:var(--gray-light);margin-bottom:20px;font-size:0.9rem">Basierend auf deinen Schwachstellen: Diese KI-Agenten haetten den groessten Impact auf dein Marketing-System.</p>`+
+      sorted.map(a=>{const t=CONFIG.tiers.find(x=>x.id===a.tier);
+      return `<div class="agent-card"><div class="agent-icon" style="background:${t.color}">${a.id}</div><div><h4>${a.name}-Agent <span class="heatmap-tier-badge" style="background:${t.color};font-size:0.65rem;vertical-align:middle;margin-left:6px">Score: ${a.score}/5</span></h4><div class="agent-desc">${a.aiAgent}</div><div class="agent-prompt-wrap"><div class="agent-prompt">${a.aiPrompt}</div><button class="btn-copy-prompt" onclick="copyAgentPrompt(this)" title="Prompt kopieren">&#128203;</button></div></div></div>`;
+    }).join('');
+  }
+
+  function showResultTab(tab) {
+    document.querySelectorAll('.results-tab').forEach(t=>t.classList.remove('active'));
+    document.querySelectorAll('.results-panel').forEach(p=>p.classList.remove('active'));
+    // Find static tab by onclick attribute
+    const tabEl = document.querySelector(`.results-tab[onclick*="'${tab}'"]`);
+    if (tabEl) tabEl.classList.add('active');
+    // Find dynamic tab by data-tab attribute
+    const dynTab = document.querySelector(`.results-tab-dynamic[data-tab="${tab}"]`);
+    if (dynTab) dynTab.classList.add('active');
+    const panel = document.getElementById('panel-'+tab);
+    if (panel) panel.classList.add('active');
+  }
+
+  // === EXPORT ===
+  function renderExport() {
+    const lines=[];
+    const exportLabels = CONFIG.labels.exportLabels || {};
+
+    if (activeNeed) {
+      const need = CONFIG.needs.find(n => n.id === activeNeed);
+      lines.push((exportLabels.goalPrefix || 'Mein Hauptziel: ') + need.name + ' (' + need.question + ')', '');
+    }
+
+    lines.push(exportLabels.preamble || ('Ich habe ein ' + CONFIG.labels.assessmentTitle + ' durchgefuehrt mit ' + COMPONENT_COUNT + ' Bausteinen in ' + CONFIG.tiers.length + ' Kategorien.'),'','ERGEBNISSE:','');
+    CONFIG.tiers.forEach(t=>{
+      lines.push(`--- ${t.name.toUpperCase()} (Schnitt: ${getTierAvg(t.id).toFixed(1)}/5) ---`);
+      CONFIG.components.filter(a=>a.tier===t.id).forEach(a=>{
+        const s=scores[a.id-1]; lines.push(`${a.name}: ${s}/5 (${a.levels[s-1]})`);
+        if(s<=3){ const unmet=a.theses.filter((_,ti)=>!checkStates[a.id-1][ti]);
+          if(unmet.length)lines.push(`  Noch offen: "${unmet[0]}"`);
+        }
+      }); lines.push('');
+    });
+    lines.push('Gesamt-Score: '+Math.round(getOverallScore())+'%','');
+    lines.push(exportLabels.topAgentsHeader || 'TOP KI-AGENT-EMPFEHLUNGEN:');
+    [...CONFIG.components].filter(a=>scores[a.id-1]<=3).sort((a,b)=>calcNeedPriority(b, activeNeed)-calcNeedPriority(a, activeNeed)).slice(0,5).forEach((a,i)=>{
+      lines.push(`${i+1}. ${a.name}-Agent: ${a.aiAgent}`);
+    });
+    if (activeNeed) {
+      const need = CONFIG.needs.find(n => n.id === activeNeed);
+      lines.push('', (exportLabels.goalReiteration || 'Mein Hauptziel ist: ') + need.name + '. ' + need.question);
+      lines.push(exportLabels.needAnalysisRequest || 'Bitte analysiere meine Staerken und Schwaechen SPEZIELL im Hinblick auf dieses Ziel. Erstelle einen priorisierten 90-Tage-Aktionsplan, der mich diesem Ziel naeher bringt, mit konkreten KI-Agent-Einsatzmoeglichkeiten. Beruecksichtige die Abhaengigkeiten zwischen den Bausteinen.');
+    } else {
+      lines.push('', exportLabels.generalAnalysisRequest || 'Bitte analysiere meine Staerken und Schwaechen. Erstelle einen priorisierten 90-Tage-Aktionsplan mit konkreten KI-Agent-Einsatzmoeglichkeiten fuer jede Schwachstelle. Beruecksichtige die Abhaengigkeiten zwischen den Bausteinen.');
+    }
+    document.getElementById('promptPreview').textContent = lines.join('\n');
+
+    const scoreStr=[]; for(let i=0;i<COMPONENT_COUNT;i+=5)scoreStr.push(scores.slice(i,i+5).join(''));
+    let shareUrl = window.location.origin+window.location.pathname+'?s='+scoreStr.join('-');
+    if (activeNeed) shareUrl += '&need=' + activeNeed;
+    document.getElementById('shareUrl').textContent = shareUrl;
+
+    if (activeNeed) {
+      const need = CONFIG.needs.find(n => n.id === activeNeed);
+      document.getElementById('ctaTitle').textContent = need.cta.title;
+      document.getElementById('ctaText').textContent = need.cta.text;
+    } else {
+      const weak=CONFIG.tiers.reduce((w,t)=>getTierAvg(t.id)<getTierAvg(w.id)?t:w,CONFIG.tiers[0]);
+      const ctas=CONFIG.export.defaultCtas;
+      const c=ctas[weak.id]; document.getElementById('ctaTitle').textContent=c.title; document.getElementById('ctaText').textContent=c.text;
+    }
+  }
+
+  function copyPrompt(){navigator.clipboard.writeText(document.getElementById('promptPreview').textContent).then(()=>{const f=document.getElementById('copyFeedback');f.classList.add('show');setTimeout(()=>f.classList.remove('show'),2000);});}
+  function copyShareUrl(){navigator.clipboard.writeText(document.getElementById('shareUrl').textContent).then(()=>{const f=document.getElementById('shareFeedback');f.classList.add('show');setTimeout(()=>f.classList.remove('show'),2000);});}
+
+  function copyAgentPrompt(btn) {
+    const text = btn.previousElementSibling.textContent.replace('Beispiel-Prompt: ', '');
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = '\u2713';
+      btn.style.color = 'var(--score-high)';
+      setTimeout(() => { btn.textContent = '\uD83D\uDCCB'; btn.style.color = ''; }, 1500);
+    });
+  }
+
+  // === RESET ===
+  function resetAssessment() {
+    if(!confirm('Alle Bewertungen zuruecksetzen? Das kann nicht rueckgaengig gemacht werden.')) return;
+    scores = new Array(COMPONENT_COUNT).fill(1);
+    checkStates = Array.from({length: COMPONENT_COUNT}, () => new Array(THESES_COUNT).fill(false));
+    touched = new Array(COMPONENT_COUNT).fill(false);
+    activeNeed = null;
+    localStorage.removeItem(STORAGE_PREFIX + '-scores');
+    localStorage.removeItem(STORAGE_PREFIX + '-checks');
+    localStorage.removeItem(STORAGE_PREFIX + '-touched');
+    localStorage.removeItem(STORAGE_PREFIX + '-need');
+    document.getElementById('tierTabs').innerHTML = '';
+    document.getElementById('sliderGroups').innerHTML = '';
+    if(miniRadarChart){miniRadarChart.destroy();miniRadarChart=null;}
+    initAssessment();
+  }
+
+  // === PYRAMID ===
+  function renderPyramid() {
+    const container = document.getElementById('pyramidContainer');
+    if (!container) return;
+    const tierCount = CONFIG.tiers.length;
+    // Render tiers in reverse order (smallest/top first)
+    const reversed = [...CONFIG.tiers].reverse();
+    container.innerHTML = reversed.map((tier, i) => {
+      const width = 50 + (i / (tierCount - 1)) * 48; // 50% to 98%
+      const tierIdx = CONFIG.tiers.indexOf(tier);
+      const compCount = CONFIG.components.filter(c => c.tier === tier.id).length;
+      return `<div class="pyramid-tier" style="width:${width}%;background:var(--tier-${tier.id});cursor:pointer" onclick="jumpToTier(${tierIdx})">${tier.name}<span class="pyramid-count">${compCount} ${CONFIG.labels.componentLabel}</span></div>`;
+    }).join('');
+  }
+
+  // === EXPOSE GLOBALS ===
+  window.showScreen = showScreen;
+  window.jumpToTier = jumpToTier;
+  window.jumpToAgent = jumpToAgent;
+  window.showResults = showResults;
+  window.showResultTab = showResultTab;
+  window.resetAssessment = resetAssessment;
+  window.selectNeed = selectNeed;
+  window.startKomplettCheck = startKomplettCheck;
+  window.showNeedsLanding = showNeedsLanding;
+  window.copyPrompt = copyPrompt;
+  window.copyShareUrl = copyShareUrl;
+  window.copyAgentPrompt = copyAgentPrompt;
+  window.toggleThese = toggleThese;
+  window.updateSlider = updateSlider;
+  window.hlDeps = hlDeps;
+  window.clrDeps = clrDeps;
+
+  // === INIT ===
+  loadState();
+  renderNeedLanding();
+  renderPyramid();
+  initAssessment();
+  if (activeNeed) applyNeedContext();
+
+})(CONFIG);
+
+</script>
+</body>
+</html>
