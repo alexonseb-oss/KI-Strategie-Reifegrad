@@ -362,12 +362,58 @@ body { font-family: 'Montserrat', -apple-system, sans-serif; background: var(--b
 .nav-links a { font-size: 13px; font-weight: 600; color: var(--gray); text-decoration: none; letter-spacing: 0.5px; transition: color 0.2s; }
 .nav-links a:hover { color: var(--primary); }
 .logo-bar { display: none; }
+
+/* === Compact-Layout-Override (AI-PA): Text kleiner, Content höher, weniger Scrollen === */
+.nav { height: 48px; padding: 0 20px; }
+.nav-links { gap: 18px; font-size: 0.875rem; }
+.screen { padding: 56px 0 24px; min-height: auto; }
+
+/* Landing-Hero: weniger Top-Abstand, kleinere Headlines */
+.landing-hero { padding: 16px 0 20px; }
+.landing-hero h1 { font-size: clamp(1.5rem, 3.5vw, 2.25rem); margin-bottom: 8px; line-height: 1.2; }
+.landing-hero .subtitle { font-size: clamp(0.875rem, 1.8vw, 1rem); margin: 0 auto 20px; }
+
+/* Stats-Block kompakter */
+.landing-stats { gap: 24px; margin-bottom: 24px; }
+.landing-stat .number { font-size: 1.75rem; }
+.landing-stat .label { font-size: 0.75rem; }
+
+/* Needs-Cards & Pyramid kompakter */
+.needs-grid { gap: 12px; margin: 0 auto 20px; max-width: 880px; }
+.need-card { padding: 14px 12px; border-radius: 12px; }
+.need-card h3, .need-card .need-title { font-size: 0.95rem; }
+.need-card p, .need-card .need-desc { font-size: 0.8rem; }
+.pyramid { max-width: 440px; margin: 0 auto 24px; }
+.pyramid-tier { padding: 10px 16px; font-size: 0.85rem; }
+.komplett-check-link { font-size: 0.85rem; }
+
+/* Assessment-Screen kompakter */
+.assessment-header { margin-bottom: 20px; }
+.assessment-header h2 { font-size: 1.35rem; }
+.assessment-header p { font-size: 0.8rem !important; margin-bottom: 12px !important; }
+
+/* Buttons kleiner */
+.btn-primary { padding: 12px 32px; font-size: 0.95rem; letter-spacing: 0.5px; }
+.btn-secondary { padding: 10px 22px; font-size: 0.875rem; }
+.btn-reset { padding: 8px 16px; font-size: 0.75rem; }
+
+/* Results-Screen kompakter */
+.results-header { margin-bottom: 24px; }
+.results-header h2 { font-size: 1.35rem; }
+.score-circle { width: 130px; height: 130px; }
+.score-circle-ring { width: 130px; height: 130px; }
+.score-number { font-size: 2.25rem; }
+.overall-score { margin-bottom: 28px; }
+.tier-bars { margin-bottom: 32px; }
+
+/* Progress-Leiste etwas schlanker, body-padding entsprechend */
+body { padding-bottom: 56px; }
+.progress-bar { padding: 10px 24px; }
 </style>
 <link rel="stylesheet" href="AI-Performance-Academy-Farbpalette.css">
 </head>
 <body>
 <nav class="nav">
-  <div class="nav-logo">AI PERFORMANCE ACADEMY</div>
   <div class="nav-links">
     <a href="#" onclick="showScreen('landing')">Start</a>
     <a href="#" onclick="showScreen('assessment')">Assessment</a>
